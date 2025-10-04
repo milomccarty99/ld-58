@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://xix7drsg6d8j"]
+
+[node name="World" type="Node2D"]
+
+[node name="Environment" type="Node2D" parent="."]
+
+[node name="Player" type="Node2D" parent="."]
+
+[node name="PlayerCamera" type="Camera2D" parent="Player"]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Player"]
+offset_right = 40.0
+offset_bottom = 40.0
+text = "Sandwich parts collected:"
