@@ -15,7 +15,7 @@ var noise = FastNoiseLite.new()
 #	shop (x/level) - racoondsdsssssssssssssssssssssddaw
 #	artifacts:
 #			- Lunchbox (may contain 1 or 2 ingredients)
-#			- Thermas - (reduce chill effect ???)
+#			- Thermos - (reduce chill effect ???)
 #			- Water bottle (instant restore)
 #			- Trading cards
 #	sadnwich pieces -- exactly 2 of each
