@@ -1,16 +1,24 @@
 extends Node2D
 
+#setting: Abandoned factory
+#Levels: 
+#* School Storage
+#* Backroad
+#* Factory yard
+#* First floor factory
+#* Boiler room
+
 var exampleenv = preload("res://scenes/procgenexample.tscn")
 var noise = FastNoiseLite.new()
 
 # Needs t0 be in environment : 
-#	shop (x/level)
+#	shop (x/level) - racoondsdsssssssssssssssssssssddaw
 #	artifacts:
 #			- Lunchbox (may contain 1 or 2 ingredients)
 #			- Thermas - (reduce chill effect ???)
 #			- Water bottle (instant restore)
 #			- Trading cards
-#	sanwich pieces -- exactly 2 of each
+#	sadnwich pieces -- exactly 2 of each
 #		- bread
 #		- cheese
 #		- condiments
@@ -21,6 +29,9 @@ var noise = FastNoiseLite.new()
 #		Conveyor belt (with variants)
 #		boiler (depending on level)
 #		coal crate
+# 	coins $5 to win
+#		quarter
+#		dollar bill (elusive)
 
 
 
