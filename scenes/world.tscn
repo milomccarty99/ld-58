@@ -1,14 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://xix7drsg6d8j"]
+[gd_scene load_steps=19 format=3 uid="uid://xix7drsg6d8j"]
 
 [ext_resource type="Script" uid="uid://cpguuti7aq1vi" path="res://scripts/player.gd" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://bvdv5e3gexbet" path="res://scripts/environment.gd" id="1_rwgxs"]
 [ext_resource type="Texture2D" uid="uid://bogtgqk2435pk" path="res://images/grass.png" id="2_71j4m"]
 [ext_resource type="Script" uid="uid://bjjcl8wm6mbu7" path="res://scenes/level.gd" id="2_i7141"]
 [ext_resource type="Script" uid="uid://jyw5eanxtj4p" path="res://scenes/room.gd" id="3_4mrxx"]
-[ext_resource type="Texture2D" uid="uid://vqf0qcrgc26j" path="res://images/enemny_notice.png" id="3_4wyf3"]
 [ext_resource type="Texture2D" uid="uid://cw47bufpkx0cn" path="res://images/player_x.png" id="4_k0juu"]
 [ext_resource type="Texture2D" uid="uid://d3rortgtgeujk" path="res://images/assortment.png" id="8_7r4gi"]
+[ext_resource type="Texture2D" uid="uid://cub3860npe3eq" path="res://images/ProtagIdle.png" id="8_w7kh3"]
 [ext_resource type="Texture2D" uid="uid://cxawsbs4iea12" path="res://images/Source_indoor_tiles_all.png" id="9_w7kh3"]
+[ext_resource type="Script" uid="uid://dxc06wq1qhdn1" path="res://scenes/collision_shape_2d.gd" id="10_w7kh3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qfnet"]
 texture = ExtResource("2_71j4m")
@@ -486,6 +487,11 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e3hyu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7r4gi"]
+size = Vector2(20, 24)
+
 [node name="World" type="Node2D"]
 
 [node name="Environment" type="Node2D" parent="."]
@@ -521,6 +527,11 @@ script = ExtResource("1_nnsk1")
 [node name="Weapons" type="Node2D" parent="Player"]
 
 [node name="PlayerCamera" type="Camera2D" parent="Player"]
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_horizontal_offset = -0.1
+drag_vertical_offset = -0.1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Player"]
 offset_left = -562.0
@@ -535,7 +546,20 @@ Is hidden:
 Equiped Weapon:"
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
-texture = ExtResource("3_4wyf3")
+texture_filter = 1
+texture = ExtResource("8_w7kh3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 sprite_frames = SubResource("SpriteFrames_qfnet")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/CharacterBody2D"]
+shape = SubResource("RectangleShape2D_e3hyu")
+
+[node name="Area2D" type="Area2D" parent="Player/CharacterBody2D"]
+
+[node name="Hitbox" type="CollisionShape2D" parent="Player/CharacterBody2D/Area2D"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_7r4gi")
+script = ExtResource("10_w7kh3")
