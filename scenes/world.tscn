@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cpguuti7aq1vi" path="res://scripts/player.gd" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://bvdv5e3gexbet" path="res://scripts/environment.gd" id="1_rwgxs"]
 [ext_resource type="Texture2D" uid="uid://bogtgqk2435pk" path="res://images/grass.png" id="2_71j4m"]
-[ext_resource type="Script" uid="uid://bjjcl8wm6mbu7" path="res://scenes/level.gd" id="2_i7141"]
+[ext_resource type="Script" uid="uid://bjjcl8wm6mbu7" path="res://scripts/level.gd" id="2_i7141"]
 [ext_resource type="PackedScene" uid="uid://cfjq4ncda1a73" path="res://scenes/room.tscn" id="3_7r4gi"]
 [ext_resource type="Texture2D" uid="uid://d3rortgtgeujk" path="res://images/assortment.png" id="8_7r4gi"]
 [ext_resource type="Texture2D" uid="uid://cub3860npe3eq" path="res://images/ProtagIdle.png" id="8_w7kh3"]
@@ -486,6 +486,7 @@ script = ExtResource("1_rwgxs")
 script = ExtResource("2_i7141")
 
 [node name="Room" parent="Environment/BoilerRoom" instance=ExtResource("3_7r4gi")]
+visible = false
 
 [node name="FactoryFloor1" type="Node2D" parent="Environment"]
 

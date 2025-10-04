@@ -13,6 +13,7 @@ var enter_room = Vector2(0,0)
 var exit_room = Vector2(width -1, height - 1)
 var extra_interests  # Brutus, Supply Closet, Janitor room ;;; be sure to check against in existing room -- esp. themed rooms
 var articulated_ex_interests = ["Brutus", "Supply-Closet", "Janitor"]
+var articulated_room_types = ["Peaceful", "Trapped", "Dangerous", "Dangerous-Trapped"] # to-do Boss room and shop
 var doors
 var door_count = 0
 @onready
@@ -202,9 +203,13 @@ func _ready()->void:
 				#tileMap.set_cell(Vector2(i,j),1, tile_indexed[splash])
 				var room_to_instance = room_scene_preload.instantiate()
 				room_to_instance.start_point = Vector2(i,j)
+				var found_art_int = false
 				for interest in extra_interests.size():
 					if Vector2(i,j) == extra_interests[interest]:
 						room_to_instance.roomtype = articulated_ex_interests[interest]
+						found_art_int = true
+				if not found_art_int :
+					room_to_instance.roomtype = articulated_room_types[rng.randi() % articulated_room_types.size()]
 				room_to_instance.floor_sample = tile_indexed[splash]
 				room_to_instance.door_dir = look_for_doors(Vector2(i,j))
 				room_to_instance.walls = look_for_walls(Vector2(i,j))

@@ -15,8 +15,13 @@ var walls = 0
 var tileMap = $"../../TileMapLayer"
 @onready
 var marker = $Marker
+@onready
+var label = $RichTextLabel
 var roomtype = "peaceful" # types peaceful, trapped, janitor, dangerous
 # dangerous+trapped, brutus, shop(end of each level)
+
+func _process(delta : float) -> void:
+	label.text = roomtype
 
 func _enter_tree()->void:
 	
@@ -25,9 +30,10 @@ func _enter_tree()->void:
 func _ready()->void:
 	marker.position = Vector2(start_point.x * 32 * width, start_point.y * 32 * height)
 	if roomtype != "peaceful":
-		marker.visible = true
+		#marker.visible = true
 		marker.frame = randi() % 10
-		
+	label.text = roomtype
+	label.position = marker.position + Vector2(0, 0)
 	for i in range(0, width):
 		for j in range(0, height):
 			tileMap.set_cell(Vector2(start_point.x * width + i,start_point.y * height + j),ss_i, floor_sample)

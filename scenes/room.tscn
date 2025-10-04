@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfjq4ncda1a73"]
 
-[ext_resource type="Script" uid="uid://jyw5eanxtj4p" path="res://scenes/room.gd" id="1_36trf"]
+[ext_resource type="Script" uid="uid://jyw5eanxtj4p" path="res://scripts/room.gd" id="1_36trf"]
 [ext_resource type="Texture2D" uid="uid://d3rortgtgeujk" path="res://images/assortment.png" id="2_ffxv4"]
 
 [node name="Room" type="Node2D"]
@@ -12,3 +12,8 @@ z_index = 2
 texture_filter = 1
 texture = ExtResource("2_ffxv4")
 hframes = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+z_index = 3
+offset_right = 633.0
+offset_bottom = 138.0
