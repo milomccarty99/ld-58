@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cqm66cq5yhg7s"]
 
-[ext_resource type="Texture2D" uid="uid://b3nqu73opj6os" path="res://images/icon.svg" id="1_t3nu5"]
+[ext_resource type="Texture2D" uid="uid://b3jiaph2vbjw8" path="res://images/cheese.png" id="1_t3nu5"]
 
 [node name="ProcGen" type="Node2D"]
 

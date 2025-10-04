@@ -3,6 +3,27 @@ extends Node2D
 var exampleenv = preload("res://scenes/procgenexample.tscn")
 var noise = FastNoiseLite.new()
 
+# Needs t0 be in environment : 
+#	shop (x/level)
+#	artifacts:
+#			- Lunchbox (may contain 1 or 2 ingredients)
+#			- Thermas - (reduce chill effect ???)
+#			- Water bottle (instant restore)
+#			- Trading cards
+#	sanwich pieces -- exactly 2 of each
+#		- bread
+#		- cheese
+#		- condiments
+#		- "meat"
+# 	flavor :
+#		Crates
+#		Barrels
+#		Conveyor belt (with variants)
+#		boiler (depending on level)
+#		coal crate
+
+
+
 func _enter_tree() -> void:
 	var noise_texture = Noise.generate_scene_unique_id()
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
