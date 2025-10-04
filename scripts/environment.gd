@@ -43,7 +43,8 @@ func _enter_tree() -> void:
 	for i in range(0,2000):
 		for j in range(0,2000):
 			if noise.get_noise_2d(i,j) > .5:
-				$TileMapLayer.set_cell(Vector2(i,j),0,Vector2(0,0))
+				pass
+				#$TileMapLayer.set_cell(Vector2(i,j),0,Vector2(0,0))
 				
 				# long way
 				#var new_env = exampleenv.instantiate()
