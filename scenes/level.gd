@@ -1,6 +1,6 @@
 extends Node2D
-var width = 5
-var height = 5
+var width = 10
+var height = 10
 var level_room_noise = FastNoiseLite.new()
 var m
 var included
@@ -48,12 +48,12 @@ func is_room_valid(room : Vector2)->bool:
 	return room.x >= 0 and room.x < width and room.y >= 0 and room.y < height
 
 func include_joined_room(start_room : Vector2)->void:
-	if (start_room.x >= 0 and start_room.x < width and start_room.y >= 0 and start_room.y < height):
-		var index_id = m[start_room.x + width * start_room.y]
-		for i in range(0, width):
-			for j in range(0, height):
-				if m[i + width * j] == index_id :
-					included[i + width * j] = true
+	#if (start_room.x >= 0 and start_room.x < width and start_room.y >= 0 and start_room.y < height):
+	var index_id = m[start_room.x + width * start_room.y]
+	for i in range(0, width):
+		for j in range(0, height):
+			if m[i + width * j] == index_id :
+				included[i + width * j] = true
 					
 func look_for_walls(room : Vector2)->int:
 	var index_id = m[room.x + width * room.y]
@@ -66,32 +66,29 @@ func look_for_walls(room : Vector2)->int:
 		running_total += 4
 	if (is_room_valid(Vector2(room.x + 1, room.y)) and index_id == m[(room.x + 1) + width * room.y]) : # right
 		running_total += 8
-	
 	return running_total
 	
-func look_for_doors(room : Vector2)->Array:
-	var dirs = []
-	var dirs_size = 0
-	for i in range(0,door_count):
-		if room.x == doors[i].x and room.y == doors[i].y:
-			if room.x < doors[i].z:
-				dirs_size +=1
-				dirs.resize(dirs_size)
-				dirs[dirs_size - 1] = "right"
-			elif room.x > doors[i].z:
-				dirs_size +=1
-				dirs.resize(dirs_size)
-				dirs[dirs_size - 1] = "left"
-			elif room.y < doors[i].w:
-				dirs_size +=1
-				dirs.resize(dirs_size)
-				dirs[dirs_size - 1] = "up"
-			else:
-				dirs_size +=1
-				dirs.resize(dirs_size)
-				dirs[dirs_size - 1] = "down"
-	return dirs
-
+	
+func look_for_doors(room : Vector2)->int: # using included
+	#var index_id = m[room.x + width * room.y]
+	var running_total = 0
+	if (is_room_valid(Vector2(room.x , room.y - 1)) and included[room.x + width * (room.y - 1)]) : #up
+		running_total += 1
+	if (is_room_valid(Vector2(room.x - 1, room.y)) and included[(room.x - 1) + width * room.y]) : #left
+		running_total += 2
+	if (is_room_valid(Vector2(room.x ,room.y + 1)) and included[room.x + width * (room.y + 1)]) : #down
+		running_total += 4
+	if (is_room_valid(Vector2(room.x + 1, room.y)) and included[(room.x + 1) + width * room.y]) : #right
+		running_total += 8
+	return running_total 
+func is_closer_distance(from_room: Vector2, to_room: Vector2, closest_distance : float)-> float:
+	if is_room_valid(from_room):
+		var dist = abs(from_room.x - to_room.x) + abs(from_room.y - to_room.y)
+		if dist < closest_distance:
+			return dist
+		
+	return INF
+	
 func find_next_room_in_path(to_room : Vector2)->bool:
 	 # find next nearest room to an existing included point
 	# add door to door array
@@ -109,23 +106,44 @@ func find_next_room_in_path(to_room : Vector2)->bool:
 					if distance <= closest_distance:
 						closest_distance = distance
 						closest_included_room_point = Vector2(i,j)
+						#var closest_direction = "none"
+						var new_closest_distance = INF
 						# N,S,E,W but in random order
+						var order = [0 , 1, 2, 3]
+						for messy in range(0,4):
+							var scramble = rng.randi() %4
+							var order_temp = order[0]
+							order[0] = order[scramble]
+							order[scramble] = order_temp
+						
 						for iter in range(0, 4):
-							var order = rng.randi() % 4
-							if order == 0 and is_room_valid(Vector2(i,j - 1)) and distance > abs(i - to_room.x) + abs(j - to_room.y - 1) :
-								closest_new_room_point = Vector2(i,j - 1)
-							if order == 1 and is_room_valid(Vector2(i,j + 1)) and distance > abs(i - to_room.x) + abs(j - to_room.y + 1) :
-								closest_new_room_point = Vector2(i,j + 1)
-							if order == 2 and is_room_valid(Vector2(i - 1,j)) and distance > abs(i - to_room.x - 1) + abs(j - to_room.y):
-								closest_new_room_point = Vector2(i - 1, j)
-							if order == 3:
-								closest_new_room_point = Vector2(i + 1, j)
+							#var order = rng.randi() % 4
+							if order[iter] == 0:
+								new_closest_distance = is_closer_distance(Vector2(i,j - 1), to_room, closest_distance)
+								if new_closest_distance < closest_distance :
+									closest_distance = new_closest_distance
+									closest_new_room_point = Vector2(i,j - 1)
+							if order[iter] == 1:
+								new_closest_distance = is_closer_distance(Vector2(i,j + 1), to_room, closest_distance)
+								if new_closest_distance < closest_distance :
+									closest_distance = new_closest_distance
+									closest_new_room_point = Vector2(i,j + 1)
+							if order[iter] == 2:
+								new_closest_distance = is_closer_distance(Vector2(i - 1, j), to_room, closest_distance)
+								if new_closest_distance < closest_distance :
+									closest_distance = new_closest_distance
+									closest_new_room_point = Vector2(i - 1, j)
+							if order[iter] == 3:
+								new_closest_distance = is_closer_distance(Vector2(i + 1, j), to_room, closest_distance)
+								if new_closest_distance < closest_distance :
+									closest_distance = new_closest_distance
+									closest_new_room_point = Vector2(i + 1, j)
 		include_joined_room(closest_new_room_point)
-		if closest_new_room_point != Vector2(0,0):
-			doors.resize(door_count + 2)
-			doors[door_count] = Vector4(closest_included_room_point.x, closest_included_room_point.y, closest_new_room_point.x, closest_new_room_point.y)
-			doors[door_count+ 1] = Vector4(closest_new_room_point.x, closest_new_room_point.y, closest_included_room_point.x, closest_included_room_point.y)
-			door_count += 2
+		
+	doors.resize(door_count + 2)
+	doors[door_count] = Vector4(closest_included_room_point.x, closest_included_room_point.y, closest_new_room_point.x, closest_new_room_point.y)
+	doors[door_count+ 1] = Vector4(closest_new_room_point.x, closest_new_room_point.y, closest_included_room_point.x, closest_included_room_point.y)
+	door_count += 2
 	return included[to_room.x + width * to_room.y]
 	
 	
