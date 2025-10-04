@@ -4,8 +4,8 @@ var energy = 10
 var speed = 100
 
 func _enter_tree() -> void:
-	position.x = 16 + 320
-	position.y = 16 + 320
+	position.x = 16 #+ 320
+	position.y = 16 #+ 320
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("up"):
@@ -16,5 +16,5 @@ func _process(delta: float) -> void:
 		position.x -= 32
 	if Input.is_action_just_pressed("right"):
 		position.x += 32
-	print (" x,y {}{}", position.x, position.y)
+	#print (" x,y {}{}", position.x, position.y)
 	pass
