@@ -1,10 +1,15 @@
-[gd_scene format=3 uid="uid://xix7drsg6d8j"]
+[gd_scene load_steps=3 format=3 uid="uid://xix7drsg6d8j"]
+
+[ext_resource type="Script" uid="uid://cpguuti7aq1vi" path="res://scenes/player.gd" id="1_nnsk1"]
+[ext_resource type="Script" uid="uid://bvdv5e3gexbet" path="res://scenes/environment.gd" id="1_rwgxs"]
 
 [node name="World" type="Node2D"]
 
 [node name="Environment" type="Node2D" parent="."]
+script = ExtResource("1_rwgxs")
 
 [node name="Player" type="Node2D" parent="."]
+script = ExtResource("1_nnsk1")
 
 [node name="PlayerCamera" type="Camera2D" parent="Player"]
 
