@@ -1,7 +1,7 @@
 extends Node2D
 
 #var start = Vector2(4,4)
-#var end = Vector2(10,10)
+#var end = Vector2(10,10)#var loc = Vector2(-1,-1)
 var width = 10
 var height = 10
 var start_point = Vector2(0,0)
@@ -13,12 +13,21 @@ var door_dir = 0
 var walls = 0
 @onready
 var tileMap = $"../../TileMapLayer"
+@onready
+var marker = $Marker
+var roomtype = "peaceful" # types peaceful, trapped, janitor, dangerous
+# dangerous+trapped, brutus, shop(end of each level)
 
 func _enter_tree()->void:
 	
 	pass
 	
 func _ready()->void:
+	marker.position = Vector2(start_point.x * 32 * width, start_point.y * 32 * height)
+	if roomtype != "peaceful":
+		marker.visible = true
+		marker.frame = randi() % 10
+		
 	for i in range(0, width):
 		for j in range(0, height):
 			tileMap.set_cell(Vector2(start_point.x * width + i,start_point.y * height + j),ss_i, floor_sample)
@@ -36,6 +45,7 @@ func _ready()->void:
 				tileMap.set_cell(Vector2(start_point.x * width + i, start_point.y * height + j), ss_i, wall_sample)
 			else:
 				pass
+	# to-do fix door detection. not sure if this needs to be fixed in door_dir
 	for i in range(0, width):
 		for j in range(0, height):
 			#if door_dir % 8 != door_dir:

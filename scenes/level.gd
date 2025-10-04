@@ -1,6 +1,6 @@
 extends Node2D
-var width = 10
-var height = 10
+var width = 5
+var height = 5
 var level_room_noise = FastNoiseLite.new()
 var m
 var included
@@ -10,8 +10,9 @@ var tileMap = $"../TileMapLayer"
 var room_scene_preload = preload("res://scenes/room.tscn")
 @onready
 var enter_room = Vector2(0,0)
-var exit_room = Vector2(4,4)
-var extra_interests # Brutus, Supply Closet, Janitor room ;;; be sure to check against in existing room -- esp. themed rooms
+var exit_room = Vector2(width -1, height - 1)
+var extra_interests  # Brutus, Supply Closet, Janitor room ;;; be sure to check against in existing room -- esp. themed rooms
+var articulated_ex_interests = ["Brutus", "Supply-Closet", "Janitor"]
 var doors
 var door_count = 0
 @onready
@@ -86,7 +87,6 @@ func is_closer_distance(from_room: Vector2, to_room: Vector2, closest_distance :
 		var dist = abs(from_room.x - to_room.x) + abs(from_room.y - to_room.y)
 		if dist < closest_distance:
 			return dist
-		
 	return INF
 	
 func find_next_room_in_path(to_room : Vector2)->bool:
@@ -146,6 +146,8 @@ func find_next_room_in_path(to_room : Vector2)->bool:
 	door_count += 2
 	return included[to_room.x + width * to_room.y]
 	
+func get_free_room()->Vector2:
+	return Vector2(rng.randi()%width, rng.randi()%height)
 	
 func _ready()->void:
 	#var noise_texture = Noise.generate_scene_unique_id()
@@ -153,6 +155,7 @@ func _ready()->void:
 	level_room_noise.seed = randi()
 	level_room_noise.frequency = .5
 	rng.seed = hash("boiler1")
+	extra_interests = [get_free_room(), get_free_room(), get_free_room()]
 	m = Array()
 	m.resize(width * height + 1)
 	included = Array()
@@ -187,6 +190,10 @@ func _ready()->void:
 				#m[i + width * j].direction = "up"
 	while (not find_next_room_in_path(exit_room)):
 		pass
+	for i in range(0, extra_interests.size()):
+		while(not find_next_room_in_path(extra_interests[i])):
+			pass
+	
 	for i in range(0, width):
 		for j in range(0, height):
 			if (included[i + width * j]):
@@ -195,13 +202,15 @@ func _ready()->void:
 				#tileMap.set_cell(Vector2(i,j),1, tile_indexed[splash])
 				var room_to_instance = room_scene_preload.instantiate()
 				room_to_instance.start_point = Vector2(i,j)
+				for interest in extra_interests.size():
+					if Vector2(i,j) == extra_interests[interest]:
+						room_to_instance.roomtype = articulated_ex_interests[interest]
 				room_to_instance.floor_sample = tile_indexed[splash]
 				room_to_instance.door_dir = look_for_doors(Vector2(i,j))
 				room_to_instance.walls = look_for_walls(Vector2(i,j))
 				add_child(room_to_instance)
-		pass
+		
 			#tileMap.set_cell(Vector2(i,j), 1, Vector2(3,1))
-	
 	
 			
 			 #initialize unique indices
