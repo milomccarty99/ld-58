@@ -1,6 +1,6 @@
 extends Node2D
-var width = 10
-var height = 10
+var width = 5
+var height = 5
 var level_room_noise = FastNoiseLite.new()
 var m
 var included
@@ -10,7 +10,7 @@ var tileMap = $"../TileMapLayer"
 var room_scene_preload = preload("res://scenes/room.tscn")
 @onready
 var enter_room = Vector2(0,0)
-var exit_room = Vector2(9,9)
+var exit_room = Vector2(4,4)
 var extra_interests # Brutus, Supply Closet, Janitor room ;;; be sure to check against in existing room -- esp. themed rooms
 var doors
 var door_count = 0
@@ -58,29 +58,39 @@ func include_joined_room(start_room : Vector2)->void:
 func look_for_walls(room : Vector2)->int:
 	var index_id = m[room.x + width * room.y]
 	var running_total = 0
-	if (is_room_valid(Vector2(room.x , room.y - 1)) and index_id == m[room.x + width * (room.y - 1)]) :
+	if (is_room_valid(Vector2(room.x , room.y - 1)) and index_id == m[room.x + width * (room.y - 1)]) : #up
 		running_total += 1
-	if (is_room_valid(Vector2(room.x - 1, room.y)) and index_id == m[(room.x - 1) + width * room.y]) :
+	if (is_room_valid(Vector2(room.x - 1, room.y)) and index_id == m[(room.x - 1) + width * room.y]) : #left
 		running_total += 2
-	if (is_room_valid(Vector2(room.x ,room.y + 1)) and index_id == m[room.x + width * (room.y + 1)]) :
+	if (is_room_valid(Vector2(room.x ,room.y + 1)) and index_id == m[room.x + width * (room.y + 1)]) : #down
 		running_total += 4
-	if (is_room_valid(Vector2(room.x + 1, room.y)) and index_id == m[(room.x + 1) + width * room.y]) :
+	if (is_room_valid(Vector2(room.x + 1, room.y)) and index_id == m[(room.x + 1) + width * room.y]) : # right
 		running_total += 8
 	
 	return running_total
 	
-func look_for_doors(room : Vector2)->String:
+func look_for_doors(room : Vector2)->Array:
+	var dirs = []
+	var dirs_size = 0
 	for i in range(0,door_count):
 		if room.x == doors[i].x and room.y == doors[i].y:
 			if room.x < doors[i].z:
-				return "right"
+				dirs_size +=1
+				dirs.resize(dirs_size)
+				dirs[dirs_size - 1] = "right"
 			elif room.x > doors[i].z:
-				return "left"
+				dirs_size +=1
+				dirs.resize(dirs_size)
+				dirs[dirs_size - 1] = "left"
 			elif room.y < doors[i].w:
-				return "up"
+				dirs_size +=1
+				dirs.resize(dirs_size)
+				dirs[dirs_size - 1] = "up"
 			else:
-				return "down"
-	return "none"
+				dirs_size +=1
+				dirs.resize(dirs_size)
+				dirs[dirs_size - 1] = "down"
+	return dirs
 
 func find_next_room_in_path(to_room : Vector2)->bool:
 	 # find next nearest room to an existing included point
@@ -100,7 +110,7 @@ func find_next_room_in_path(to_room : Vector2)->bool:
 						closest_distance = distance
 						closest_included_room_point = Vector2(i,j)
 						# N,S,E,W but in random order
-						for iter in range(1, 5):
+						for iter in range(0, 4):
 							var order = rng.randi() % 4
 							if order == 0 and is_room_valid(Vector2(i,j - 1)) and distance > abs(i - to_room.x) + abs(j - to_room.y - 1) :
 								closest_new_room_point = Vector2(i,j - 1)
@@ -141,7 +151,7 @@ func _ready()->void:
 	for i in range(0, width):
 		for j in range(0,height):
 			var strength = level_room_noise.get_noise_2d(i,j) #.get_noise_2D()
-			if strength < 0.1 :
+			if strength < 0.2 :
 				#tileMap.set_cell(Vector2(i,j), 1, Vector2(3,1))
 				#sjoin_rooms(Vector2(i,j), Vector2(i,j-1))
 				pass
