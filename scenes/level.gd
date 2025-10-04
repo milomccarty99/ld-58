@@ -3,9 +3,20 @@ var width = 10
 var height = 10
 var level_room_noise = FastNoiseLite.new()
 var m
+var included
+var room_walls
 @onready
 var tileMap = $"../TileMapLayer"
-#@onready
+var room_scene_preload = preload("res://scenes/room.tscn")
+@onready
+var enter_room = Vector2(0,0)
+var exit_room = Vector2(9,9)
+var extra_interests # Brutus, Supply Closet, Janitor room ;;; be sure to check against in existing room -- esp. themed rooms
+var doors
+var door_count = 0
+@onready
+var rng = RandomNumberGenerator.new()
+
 #var connections = Array().resize()
 
 
@@ -30,28 +41,109 @@ func join_rooms(from_room : Vector2, to_room : Vector2)->void:
 			for j in range(0,height):
 				if m[i + width * j] == old_index:
 					m[i + width * j] = new_index
-				#m[to_room.x + width * to_room.y] = m[from_room.x + width * from_room.y];
+				#m[to_room.x + width * to_room.y] = m[from_room.x room_prefab+ width * from_room.y];
 		pass
+		
+func is_room_valid(room : Vector2)->bool:
+	return room.x >= 0 and room.x < width and room.y >= 0 and room.y < height
 
+func include_joined_room(start_room : Vector2)->void:
+	if (start_room.x >= 0 and start_room.x < width and start_room.y >= 0 and start_room.y < height):
+		var index_id = m[start_room.x + width * start_room.y]
+		for i in range(0, width):
+			for j in range(0, height):
+				if m[i + width * j] == index_id :
+					included[i + width * j] = true
+					
+func look_for_walls(room : Vector2)->int:
+	var index_id = m[room.x + width * room.y]
+	var running_total = 0
+	if (is_room_valid(Vector2(room.x , room.y - 1)) and index_id == m[room.x + width * (room.y - 1)]) :
+		running_total += 1
+	if (is_room_valid(Vector2(room.x - 1, room.y)) and index_id == m[(room.x - 1) + width * room.y]) :
+		running_total += 2
+	if (is_room_valid(Vector2(room.x ,room.y + 1)) and index_id == m[room.x + width * (room.y + 1)]) :
+		running_total += 4
+	if (is_room_valid(Vector2(room.x + 1, room.y)) and index_id == m[(room.x + 1) + width * room.y]) :
+		running_total += 8
+	
+	return running_total
+	
+func look_for_doors(room : Vector2)->String:
+	for i in range(0,door_count):
+		if room.x == doors[i].x and room.y == doors[i].y:
+			if room.x < doors[i].z:
+				return "right"
+			elif room.x > doors[i].z:
+				return "left"
+			elif room.y < doors[i].w:
+				return "up"
+			else:
+				return "down"
+	return "none"
+
+func find_next_room_in_path(to_room : Vector2)->bool:
+	 # find next nearest room to an existing included point
+	# add door to door array
+	# returns true if room was found
+	# returns false if room was not yet found
+	var closest_included_room_point = Vector2(enter_room) # we take care of this at every included point very inefficient
+	var closest_new_room_point = Vector2(enter_room)
+	var closest_distance = INF
+	if (to_room.x >= 0 and to_room.x < width and to_room.y >= 0 and to_room.y < height):
+		#pathfinding next room
+		for i in range(0, width):
+			for j in range(0,height):
+				if (included[i + width * j]):
+					var distance = abs((i-to_room.x)) + abs(j - to_room.y)
+					if distance <= closest_distance:
+						closest_distance = distance
+						closest_included_room_point = Vector2(i,j)
+						# N,S,E,W but in random order
+						for iter in range(1, 5):
+							var order = rng.randi() % 4
+							if order == 0 and is_room_valid(Vector2(i,j - 1)) and distance > abs(i - to_room.x) + abs(j - to_room.y - 1) :
+								closest_new_room_point = Vector2(i,j - 1)
+							if order == 1 and is_room_valid(Vector2(i,j + 1)) and distance > abs(i - to_room.x) + abs(j - to_room.y + 1) :
+								closest_new_room_point = Vector2(i,j + 1)
+							if order == 2 and is_room_valid(Vector2(i - 1,j)) and distance > abs(i - to_room.x - 1) + abs(j - to_room.y):
+								closest_new_room_point = Vector2(i - 1, j)
+							if order == 3:
+								closest_new_room_point = Vector2(i + 1, j)
+		include_joined_room(closest_new_room_point)
+		if closest_new_room_point != Vector2(0,0):
+			doors.resize(door_count + 2)
+			doors[door_count] = Vector4(closest_included_room_point.x, closest_included_room_point.y, closest_new_room_point.x, closest_new_room_point.y)
+			doors[door_count+ 1] = Vector4(closest_new_room_point.x, closest_new_room_point.y, closest_included_room_point.x, closest_included_room_point.y)
+			door_count += 2
+	return included[to_room.x + width * to_room.y]
+	
 	
 func _ready()->void:
 	#var noise_texture = Noise.generate_scene_unique_id()
 	level_room_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX 
 	level_room_noise.seed = randi()
 	level_room_noise.frequency = .5
+	rng.seed = hash("boiler1")
 	m = Array()
-	m.resize((width + 1) * (height + 1))
+	m.resize(width * height + 1)
+	included = Array()
+	included.resize(width * height)
+	room_walls = Array()
+	room_walls.resize(width * height)
+	doors = Array()
+	
 	for i in range(0, width):
 		for j in range(0,height):
 			m[i + width * j] = i + width * j #initialize unique indices
+			included[i + width * j] = false # initialize to false 
 			
 	for i in range(0, width):
 		for j in range(0,height):
 			var strength = level_room_noise.get_noise_2d(i,j) #.get_noise_2D()
-			if strength < 0.2 :
+			if strength < 0.1 :
 				#tileMap.set_cell(Vector2(i,j), 1, Vector2(3,1))
 				#sjoin_rooms(Vector2(i,j), Vector2(i,j-1))
-				
 				pass
 			elif strength < 0.4:
 				join_rooms(Vector2(i,j), Vector2(i,j-1))
@@ -65,14 +157,24 @@ func _ready()->void:
 				join_rooms(Vector2(i,j), Vector2(i+1,j))#m[1 + width * j] = m[(i+1) + width * j]
 				#tileMap.set_cell(Vector2(i,j), 1, Vector2(11,2))
 				#m[i + width * j].direction = "up"
+	while (not find_next_room_in_path(exit_room)):
+		pass
 	for i in range(0, width):
 		for j in range(0, height):
-			var tile_indexed = [Vector2(4,2), Vector2(3,6), Vector2(11,2)]
-			var splash = m[i + width * j] % tile_indexed.size()
-			tileMap.set_cell(Vector2(i,j),1, tile_indexed[splash])
+			if (included[i + width * j]):
+				var tile_indexed = [Vector2(4,2), Vector2(3,6), Vector2(11,2)]
+				var splash = m[i + width * j] % tile_indexed.size()
+				#tileMap.set_cell(Vector2(i,j),1, tile_indexed[splash])
+				var room_to_instance = room_scene_preload.instantiate()
+				room_to_instance.start_point = Vector2(i,j)
+				room_to_instance.floor_sample = tile_indexed[splash]
+				room_to_instance.door_dir = look_for_doors(Vector2(i,j))
+				room_to_instance.walls = look_for_walls(Vector2(i,j))
+				add_child(room_to_instance)
 		pass
 			#tileMap.set_cell(Vector2(i,j), 1, Vector2(3,1))
-					
+	
+	
 			
 			 #initialize unique indices
 	pass
