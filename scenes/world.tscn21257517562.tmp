@@ -516,7 +516,43 @@ script = ExtResource("9_e3hyu")
 
 [node name="Health" type="Node2D" parent="Player"]
 script = ExtResource("8_e3hyu")
-health = 2
+health = 3
+
+[node name="Damaged Heart 1" type="Node2D" parent="Player/Health"]
+
+[node name="CookieHealthCrumbles1" type="Sprite2D" parent="Player/Health/Damaged Heart 1"]
+position = Vector2(232.5, -76.5)
+texture = ExtResource("9_xo05s")
+
+[node name="Damaged Heart 2" type="Node2D" parent="Player/Health"]
+
+[node name="CookieHealthCrumbles2" type="Sprite2D" parent="Player/Health/Damaged Heart 2"]
+position = Vector2(205.5, -77.5)
+texture = ExtResource("10_dss4m")
+
+[node name="Damaged Heart 3" type="Node2D" parent="Player/Health"]
+
+[node name="CookieHealthCrumbles3" type="Sprite2D" parent="Player/Health/Damaged Heart 3"]
+position = Vector2(180.5, -74.5)
+texture = ExtResource("9_xo05s")
+
+[node name="FullHeart1" type="Node2D" parent="Player/Health"]
+
+[node name="CookieHealth" type="Sprite2D" parent="Player/Health/FullHeart1"]
+position = Vector2(180.5, -76.5)
+texture = ExtResource("9_jhx03")
+
+[node name="FullHeart2" type="Node2D" parent="Player/Health"]
+
+[node name="CookieHealth3" type="Sprite2D" parent="Player/Health/FullHeart2"]
+position = Vector2(205.5, -76.5)
+texture = ExtResource("9_jhx03")
+
+[node name="FullHeart3" type="Node2D" parent="Player/Health"]
+
+[node name="CookieHealth2" type="Sprite2D" parent="Player/Health/FullHeart3"]
+position = Vector2(230.5, -76.5)
+texture = ExtResource("9_jhx03")
 
 [node name="Damaged" type="Node2D" parent="Player"]
 script = ExtResource("10_o8fc1")
@@ -533,10 +569,10 @@ drag_horizontal_offset = -0.1
 drag_vertical_offset = -0.1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Player"]
-offset_left = -794.0
-offset_top = -125.0
-offset_right = -332.0
-offset_bottom = 131.0
+offset_left = -390.0
+offset_top = -201.0
+offset_right = 72.0
+offset_bottom = 55.0
 text = "S Collected
 Artifacts:
 Money:
@@ -561,47 +597,3 @@ shape = SubResource("RectangleShape2D_e3hyu")
 position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_7r4gi")
 script = ExtResource("10_w7kh3")
-
-[node name="UI" type="CanvasLayer" parent="."]
-
-[node name="Control" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Damaged Heart 1" type="Node2D" parent="UI/Control"]
-
-[node name="CookieHealthCrumbles1" type="Sprite2D" parent="UI/Control/Damaged Heart 1"]
-position = Vector2(79.5, 19.5)
-texture = ExtResource("9_xo05s")
-
-[node name="Damaged Heart 2" type="Node2D" parent="UI/Control"]
-
-[node name="CookieHealthCrumbles2" type="Sprite2D" parent="UI/Control/Damaged Heart 2"]
-position = Vector2(52.5, 18.5)
-texture = ExtResource("10_dss4m")
-
-[node name="Damaged Heart 3" type="Node2D" parent="UI/Control"]
-
-[node name="CookieHealthCrumbles3" type="Sprite2D" parent="UI/Control/Damaged Heart 3"]
-position = Vector2(27.5, 21.5)
-texture = ExtResource("9_xo05s")
-
-[node name="FullHeart1" type="Node2D" parent="UI/Control"]
-
-[node name="CookieHealth1" type="Sprite2D" parent="UI/Control/FullHeart1"]
-position = Vector2(27.5, 19.5)
-texture = ExtResource("9_jhx03")
-
-[node name="FullHeart2" type="Node2D" parent="UI/Control"]
-
-[node name="CookieHealth2" type="Sprite2D" parent="UI/Control/FullHeart2"]
-position = Vector2(52.5, 19.5)
-texture = ExtResource("9_jhx03")
-
-[node name="FullHeart3" type="Node2D" parent="UI/Control"]
-
-[node name="CookieHealth3" type="Sprite2D" parent="UI/Control/FullHeart3"]
-position = Vector2(77.5, 19.5)
-texture = ExtResource("9_jhx03")
