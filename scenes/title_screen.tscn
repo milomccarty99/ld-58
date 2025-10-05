@@ -1,0 +1,84 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqaadxtbska7"]
+
+[ext_resource type="AudioStream" uid="uid://dw3asfkgw5weq" path="res://music/UndergroundAccess.wav" id="1_fgkus"]
+[ext_resource type="Script" uid="uid://cjbnj5wveoapv" path="res://scripts/title_screen.gd" id="1_s4lrb"]
+[ext_resource type="PackedScene" uid="uid://xstus23arsnl" path="res://scenes/volume_slider.tscn" id="2_sa3yf"]
+
+[node name="TitleScreen" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_s4lrb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="TextEdit" type="TextEdit" parent="."]
+texture_filter = 1
+offset_left = 94.0
+offset_top = 63.0
+offset_right = 513.0
+offset_bottom = 229.0
+placeholder_text = "Ludum Dare 58 - Lunch Money
+by PapaPh4nt0m, Zoomzang, ElfyBean, CyclopicSpider, Curdle Games"
+wrap_mode = 1
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = 94.0
+offset_top = 238.0
+offset_right = 190.0
+offset_bottom = 269.0
+text = "Start Game"
+
+[node name="CreditsButton" type="Button" parent="."]
+offset_left = 94.0
+offset_top = 281.0
+offset_right = 157.0
+offset_bottom = 312.0
+text = "Credits"
+
+[node name="QuitButton" type="Button" parent="."]
+offset_left = 92.0
+offset_top = 322.0
+offset_right = 186.0
+offset_bottom = 330.0
+text = "Quit Game"
+
+[node name="MuteButton" type="CheckButton" parent="."]
+visible = false
+offset_left = 421.0
+offset_top = 226.0
+offset_right = 514.0
+offset_bottom = 257.0
+text = "Audio"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_fgkus")
+autoplay = true
+bus = &"Music"
+
+[node name="MusicSlider" parent="." instance=ExtResource("2_sa3yf")]
+offset_left = 323.0
+offset_top = 286.0
+offset_right = 520.0
+offset_bottom = 302.0
+bus_name = "Music"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MusicSlider"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -20.0
+offset_right = 142.0
+offset_bottom = 20.0
+text = "Music"
+
+[node name="SFXSlider" parent="." instance=ExtResource("2_sa3yf")]
+offset_left = 320.0
+offset_top = 334.0
+offset_right = 517.0
+offset_bottom = 350.0
+bus_name = "SFX"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SFXSlider"]
+layout_mode = 0
+offset_top = -28.0
+offset_right = 123.0
+offset_bottom = 12.0
+text = "Sound FX"

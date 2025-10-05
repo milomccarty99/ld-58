@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cxawsbs4iea12" path="res://images/Source_indoor_tiles_all.png" id="9_w7kh3"]
 [ext_resource type="Script" path="res://scenes/collision_shape_2d.gd" id="10_w7kh3"]
 [ext_resource type="AudioStream" uid="uid://dw3asfkgw5weq" path="res://music/UndergroundAccess.wav" id="11_q5onr"]
-[ext_resource type="Script" uid="uid://brbukdlla7y4c" path="res://scenes/music.gd" id="12_jhx03"]
+[ext_resource type="Script" uid="uid://brbukdlla7y4c" path="res://scripts/music.gd" id="12_jhx03"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qfnet"]
 texture = ExtResource("2_71j4m")

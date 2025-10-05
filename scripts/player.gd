@@ -12,7 +12,7 @@ func _enter_tree() -> void:
 
 func _process(_delta: float) -> void:
 	#get_node("CollisionShape2D")
-	print($CollisionShape2D)
+	#print($CollisionShape2D)
 	if Input.is_action_just_pressed("up"):
 		position.y -= 32
 		turnTake = 1
