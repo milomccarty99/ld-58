@@ -8,6 +8,7 @@ var room_walls
 @onready
 var tileMap = $"../TileMapLayer"
 var room_scene_preload = preload("res://scenes/room.tscn")
+var enemy_preload = preload("res://scenes/nondescript_enemy.tscn")
 @onready
 var enter_room = Vector2(0,0)
 var exit_room = Vector2(width -1, height - 1)
@@ -213,10 +214,33 @@ func _ready()->void:
 				room_to_instance.floor_sample = tile_indexed[splash]
 				room_to_instance.door_dir = look_for_doors(Vector2(i,j))
 				room_to_instance.walls = look_for_walls(Vector2(i,j))
+				# "Peaceful", "Trapped", "Dangerous", "Dangerous-Trapped"]
+				if room_to_instance.roomtype == "Peaceful":
+					pass # no enemies 
+				if room_to_instance.roomtype == "Trapped":
+					spawn_enemies(Vector2(i,j), 1)
+					pass # spawn 1 trapper (?)
+				if room_to_instance.roomtype == "Dangerous":
+					spawn_enemies(Vector2(i,j), 3)
+					pass # spawn 3
+				if room_to_instance.roomtype == "Dangerous-Trapped":
+					spawn_enemies(Vector2(i,j), 4)
+					pass # spawn 4 - 1 trappers 3 enemies
+				
+				
+				
 				add_child(room_to_instance)
-		
 			#tileMap.set_cell(Vector2(i,j), 1, Vector2(3,1))
 	
 			
-			 #initialize unique indices
+			 
+	pass
+func spawn_enemies(room_coords : Vector2,num_base_enemies : int, num_trappers: int = 0, num_janitors : int = 0)->void:
+	var start_pos = Vector2(1,1)
+	for base_enemy in range(0,num_base_enemies):
+		var base_enemy_to_instance = enemy_preload.instantiate()
+		base_enemy_to_instance.starting_pos = Vector2(room_coords.x * 32 * width * start_pos.x, room_coords.y * 32 * width * start_pos.y )
+		add_child(base_enemy_to_instance)
+		start_pos += Vector2(1,1)
+		
 	pass

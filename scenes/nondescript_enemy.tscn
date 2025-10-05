@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://blib4535moa53"]
+
+[ext_resource type="Script" uid="uid://bu3cc2n3ivs2n" path="res://scripts/enemy.gd" id="1_yj2nc"]
+[ext_resource type="Texture2D" uid="uid://qk5beyjtvb7o" path="res://images/bloop-enemy.png" id="2_488n5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3hyu"]
+atlas = ExtResource("2_488n5")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q5onr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3hyu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="NondescriptEnemy" type="Node2D"]
+z_index = 1
+texture_filter = 1
+script = ExtResource("1_yj2nc")
+
+[node name="EnemyAnimation" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_q5onr")
+
+[node name="DeleteMe" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
