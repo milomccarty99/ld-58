@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://xix7drsg6d8j"]
+[gd_scene load_steps=19 format=3 uid="uid://xix7drsg6d8j"]
 
 [ext_resource type="Script" uid="uid://cpguuti7aq1vi" path="res://scripts/player.gd" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://bvdv5e3gexbet" path="res://scripts/environment.gd" id="1_rwgxs"]
 [ext_resource type="Texture2D" uid="uid://bogtgqk2435pk" path="res://images/grass.png" id="2_71j4m"]
-[ext_resource type="Script" uid="uid://bjjcl8wm6mbu7" path="res://scenes/level.gd" id="2_i7141"]
+[ext_resource type="Script" uid="uid://bjjcl8wm6mbu7" path="res://scripts/level.gd" id="2_i7141"]
 [ext_resource type="PackedScene" uid="uid://cfjq4ncda1a73" path="res://scenes/room.tscn" id="3_7r4gi"]
+[ext_resource type="PackedScene" uid="uid://blib4535moa53" path="res://scenes/nondescript_enemy.tscn" id="4_w7kh3"]
 [ext_resource type="Texture2D" uid="uid://d3rortgtgeujk" path="res://images/assortment.png" id="8_7r4gi"]
 [ext_resource type="Script" uid="uid://ddwq2uiwp6kpm" path="res://scripts/health.gd" id="8_e3hyu"]
 [ext_resource type="Texture2D" uid="uid://cub3860npe3eq" path="res://images/ProtagIdle.png" id="8_w7kh3"]
@@ -15,6 +16,9 @@
 [ext_resource type="Texture2D" uid="uid://c2jyrqximc7fd" path="res://images/CookieHealthCrumbles2.png" id="10_dss4m"]
 [ext_resource type="Script" uid="uid://cweek32yp1pba" path="res://scripts/damagetaken.gd" id="10_o8fc1"]
 [ext_resource type="Script" uid="uid://dxc06wq1qhdn1" path="res://scenes/collision_shape_2d.gd" id="10_w7kh3"]
+[ext_resource type="Script" path="res://scenes/collision_shape_2d.gd" id="10_w7kh3"]
+[ext_resource type="AudioStream" uid="uid://dw3asfkgw5weq" path="res://music/UndergroundAccess.wav" id="11_q5onr"]
+[ext_resource type="Script" uid="uid://brbukdlla7y4c" path="res://scripts/music.gd" id="12_jhx03"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qfnet"]
 texture = ExtResource("2_71j4m")
@@ -492,6 +496,10 @@ script = ExtResource("1_rwgxs")
 script = ExtResource("2_i7141")
 
 [node name="Room" parent="Environment/BoilerRoom" instance=ExtResource("3_7r4gi")]
+visible = false
+
+[node name="NondescriptEnemy" parent="Environment/BoilerRoom" instance=ExtResource("4_w7kh3")]
+visible = false
 
 [node name="FactoryFloor1" type="Node2D" parent="Environment"]
 
@@ -537,6 +545,11 @@ offset_left = -794.0
 offset_top = -125.0
 offset_right = -332.0
 offset_bottom = 131.0
+visible = false
+offset_left = -562.0
+offset_top = -313.0
+offset_right = -100.0
+offset_bottom = -57.0
 text = "S Collected
 Artifacts:
 Money:
@@ -605,3 +618,8 @@ texture = ExtResource("9_jhx03")
 [node name="CookieHealth3" type="Sprite2D" parent="UI/Control/FullHeart3"]
 position = Vector2(77.5, 19.5)
 texture = ExtResource("9_jhx03")
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_q5onr")
+autoplay = true
+max_distance = 4096.0
+script = ExtResource("12_jhx03")
