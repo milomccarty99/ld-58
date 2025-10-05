@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://xix7drsg6d8j"]
+[gd_scene load_steps=24 format=3 uid="uid://xix7drsg6d8j"]
 
 [ext_resource type="Script" uid="uid://cpguuti7aq1vi" path="res://scripts/player.gd" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://bvdv5e3gexbet" path="res://scripts/environment.gd" id="1_rwgxs"]
@@ -17,8 +17,7 @@
 [ext_resource type="Script" uid="uid://cweek32yp1pba" path="res://scripts/damagetaken.gd" id="10_o8fc1"]
 [ext_resource type="AudioStream" uid="uid://dw3asfkgw5weq" path="res://music/UndergroundAccess.wav" id="11_q5onr"]
 [ext_resource type="Script" uid="uid://brbukdlla7y4c" path="res://scripts/music.gd" id="12_jhx03"]
-[ext_resource type="Script" uid="uid://bsb1ckfkcn2bt" path="res://scripts/BullyBehaviors.gd" id="18_pm21f"]
-[ext_resource type="Texture2D" uid="uid://qk5beyjtvb7o" path="res://images/bloop-enemy.png" id="19_2lf6f"]
+[ext_resource type="Script" uid="uid://o2gtygwigkfv" path="res://scripts/hurtbox.gd" id="13_lakw3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qfnet"]
 texture = ExtResource("2_71j4m")
@@ -561,6 +560,7 @@ texture = ExtResource("8_w7kh3")
 
 [node name="Hitbox" type="CollisionShape2D" parent="Player/CharacterBody2D"]
 shape = SubResource("RectangleShape2D_e3hyu")
+script = ExtResource("13_lakw3")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -613,11 +613,4 @@ autoplay = true
 max_distance = 4096.0
 script = ExtResource("12_jhx03")
 
-[node name="EnemyBuly" type="Node2D" parent="."]
-script = ExtResource("18_pm21f")
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="EnemyBuly"]
-
-[node name="BloopEnemy" type="Sprite2D" parent="EnemyBuly"]
-position = Vector2(-183, 23)
-texture = ExtResource("19_2lf6f")
+[node name="BullyTemplate" type="Node2D" parent="."]

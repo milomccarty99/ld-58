@@ -5,35 +5,41 @@ var speed = 100
 var turnTake
 var equippedWeapon = "fist"
 
-func _enter_tree() -> void:
-	position.x = 0 #+ 320aaa
-	position.y = 0 #+ 320
+var tile_size = 32
+var is_moving = false
+var target_position: Vector2
 
-func _process(_delta: float) -> void:
-	#get_node("CollisionShape2D")
-	#print($CollisionShape2D)
-	var has_moved : bool = false;
-	if Input.is_action_just_pressed("up"):
-		position.y -= 32
-		turnTake = 1
-		has_moved = true
-	if Input.is_action_just_pressed("down"):
-		position.y += 32
-		turnTake = 1
-		has_moved = true
-	if Input.is_action_just_pressed("left"):
-		position.x -= 32
-		turnTake = 1
-		has_moved = true
-	if Input.is_action_just_pressed("right"):
-		position.x += 32
-		turnTake = 1
-		has_moved = true
-	#print (" x,y {}{}", position.x, position.y)
-	if has_moved :
-		pass # $CheeseWalk.play()
-	
-	pass
+func _unhandled_input(event):
+	if is_moving:
+		return
+	var direction = Vector2.ZERO
+	if event.is_action_pressed("right"):
+		direction = Vector2.RIGHT
+	elif event.is_action_pressed("left"):
+		direction = Vector2.LEFT
+	elif event.is_action_pressed("up"):
+		direction = Vector2.UP
+	elif event.is_action_pressed("down"):
+		direction = Vector2.DOWN
+	if direction != Vector2.ZERO:
+		move_to_tile(direction)
+
+func move_to_tile(direction: Vector2):
+	is_moving = true
+	target_position = position + direction * tile_size
+	create_movement_tween()
+
+#tweening the movement to make it bouncy
+func create_movement_tween():
+	var tween = create_tween()
+	tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	tween.tween_property(self, "position", target_position, 0.25)\
+		.set_trans(Tween.TRANS_BACK)\
+		.set_ease(Tween.EASE_OUT)
+	tween.finished.connect(on_tween_finished)
+
+func on_tween_finished():
+	is_moving = false
 
 func swapWeapon():
 	#Swapping Weapon, set attack range

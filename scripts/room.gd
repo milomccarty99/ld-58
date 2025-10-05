@@ -20,7 +20,7 @@ var label = $RichTextLabel
 var roomtype = "peaceful" # types peaceful, trapped, janitor, dangerous
 # dangerous+trapped, brutus, shop(end of each level)
 
-func _process(delta : float) -> void:
+func _process(_delta : float) -> void:
 	label.text = roomtype
 
 func _enter_tree()->void:
