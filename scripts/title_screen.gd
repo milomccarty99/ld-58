@@ -26,7 +26,11 @@ func _process(delta: float) -> void:
 			AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"),1)
 			
 func _on_sb_pressed()->void:
-	get_tree().change_scene_to_file("res://scenes/world.tscn")
+	#get_tree().change_scene_to_file("res://scenes/world.tscn")
+	$"../Timer".set_process(false)
+	$"../Timer".start()
+	
+	
 
 func _on_cb_pressed()->void:
 	get_tree().change_scene_to_file("res://scenes/credits.tscn")

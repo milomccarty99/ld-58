@@ -1,0 +1,100 @@
+[gd_scene load_steps=11 format=3 uid="uid://djt1xbjceajeo"]
+
+[ext_resource type="Script" uid="uid://bjmali4dbm5tt" path="res://hallway.gd" id="1_tlvjd"]
+[ext_resource type="Script" uid="uid://cpguuti7aq1vi" path="res://scripts/player.gd" id="3_rhvbn"]
+[ext_resource type="Texture2D" uid="uid://cub3860npe3eq" path="res://images/ProtagIdle.png" id="4_coo7i"]
+[ext_resource type="Script" path="res://scenes/collision_shape_2d.gd" id="5_0be12"]
+[ext_resource type="Texture2D" uid="uid://d3rortgtgeujk" path="res://images/assortment.png" id="6_0be12"]
+[ext_resource type="AudioStream" uid="uid://b0rj0oebuuulo" path="res://soundfx/cronch_2.wav" id="6_coo7i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bl07"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g6opx"]
+size = Vector2(20, 24)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1bl07"]
+texture = ExtResource("6_0be12")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_g6opx"]
+resource_local_to_scene = true
+tile_size = Vector2i(32, 32)
+sources/1 = SubResource("TileSetAtlasSource_1bl07")
+
+[node name="AlternateDimension" type="Node2D"]
+
+[node name="ProceduralGeneration" type="Node2D" parent="."]
+
+[node name="Hallway" type="Node2D" parent="ProceduralGeneration"]
+script = ExtResource("1_tlvjd")
+
+[node name="RoomA" type="Node2D" parent="ProceduralGeneration"]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 9.346
+one_shot = true
+
+[node name="Player" type="Node2D" parent="."]
+script = ExtResource("3_rhvbn")
+
+[node name="Health" type="Node2D" parent="Player"]
+
+[node name="Artifacts" type="Node2D" parent="Player"]
+
+[node name="Weapons" type="Node2D" parent="Player"]
+
+[node name="PlayerCamera" type="Camera2D" parent="Player"]
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_horizontal_offset = -0.1
+drag_vertical_offset = -0.1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Player"]
+visible = false
+offset_left = -562.0
+offset_top = -313.0
+offset_right = -100.0
+offset_bottom = -57.0
+text = "S Collected
+Artifacts:
+Money:
+Health:
+Is hidden:
+Equiped Weapon:"
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture_filter = 1
+texture = ExtResource("4_coo7i")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/CharacterBody2D"]
+shape = SubResource("RectangleShape2D_1bl07")
+
+[node name="Area2D" type="Area2D" parent="Player/CharacterBody2D"]
+
+[node name="Hitbox" type="CollisionShape2D" parent="Player/CharacterBody2D/Area2D"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_g6opx")
+script = ExtResource("5_0be12")
+
+[node name="CheeseWalk" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("6_coo7i")
+pitch_scale = 1.89
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+z_index = -1
+tile_set = SubResource("TileSet_g6opx")

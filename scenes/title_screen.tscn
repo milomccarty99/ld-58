@@ -1,14 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqaadxtbska7"]
+[gd_scene load_steps=5 format=3 uid="uid://bqaadxtbska7"]
 
 [ext_resource type="AudioStream" uid="uid://dw3asfkgw5weq" path="res://music/UndergroundAccess.wav" id="1_fgkus"]
 [ext_resource type="Script" uid="uid://cjbnj5wveoapv" path="res://scripts/title_screen.gd" id="1_s4lrb"]
+[ext_resource type="Texture2D" uid="uid://ba6mv2bvvv0rs" path="res://images/Title_Screen.png" id="2_mgrm8"]
 [ext_resource type="PackedScene" uid="uid://xstus23arsnl" path="res://scenes/volume_slider.tscn" id="2_sa3yf"]
 
 [node name="TitleScreen" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_s4lrb")
 
+[node name="LudumDareLink" type="LinkButton" parent="."]
+offset_left = 99.0
+offset_top = 370.0
+offset_right = 191.0
+offset_bottom = 410.0
+text = "LudumDare"
+
+[node name="ItchLink" type="LinkButton" parent="."]
+offset_left = 222.0
+offset_top = 370.0
+offset_right = 262.0
+offset_bottom = 410.0
+text = "Itch"
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(640, 320)
+texture = ExtResource("2_mgrm8")
 
 [node name="TextEdit" type="TextEdit" parent="."]
 texture_filter = 1
