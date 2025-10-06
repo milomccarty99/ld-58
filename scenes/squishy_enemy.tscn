@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dk40av3f7mp3e"]
+
+[ext_resource type="Script" uid="uid://cs6q24te7uetk" path="res://scripts/squishy_enemy.gd" id="1_g527q"]
+[ext_resource type="Texture2D" uid="uid://qk5beyjtvb7o" path="res://images/bloop-enemy.png" id="2_ojkol"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3hyu"]
+atlas = ExtResource("2_ojkol")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q5onr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3hyu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="SquishyEnemy" type="Node2D"]
+z_index = 1
+texture_filter = 1
+script = ExtResource("1_g527q")
+
+[node name="EnemyAnimation" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_q5onr")
+
+[node name="DeleteMe" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true

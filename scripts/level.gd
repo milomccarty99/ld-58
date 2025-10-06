@@ -49,7 +49,7 @@ func is_tile_id_walkable(tileId ) -> bool:
 	var valid_walkable_tiles = $Room.floor_samples # ------ bad coding. using a nonexistent room as reference 
 	for t in range(0, 3): # 3 possible tile sets are offset by 5 each
 		for i in range(0, valid_walkable_tiles.size() ):
-			if valid_walkable_tiles[i].x + (5 *t) == tileId.x and valid_walkable_tiles[i].y + (5 *t) == tileId.y:
+			if valid_walkable_tiles[i].x + (0 *t) == tileId.x and valid_walkable_tiles[i].y + (4 *t) == tileId.y:
 				return true
 	return false
 	
@@ -221,7 +221,7 @@ func _ready()->void:
 		for j in range(0, height):
 			if (included[i + width * j]):
 				var tile_indexed = [Vector2(4,2), Vector2(3,6), Vector2(11,2)] # ------ replace these with newer tiles
-				var splash = m[i + width * j] % tile_indexed.size()
+				var splash = m[i + width * j] % tile_indexed.size()# 0, 1 or 2
 				#tileMap.set_cell(Vector2(i,j),1, tile_indexed[splash])
 				var room_to_instance = room_scene_preload.instantiate()
 				room_to_instance.start_point = Vector2(i,j)
@@ -232,20 +232,23 @@ func _ready()->void:
 						found_art_int = true
 				if not found_art_int :
 					room_to_instance.roomtype = articulated_room_types[rng.randi() % articulated_room_types.size()]
-				room_to_instance.floor_sample = tile_indexed[splash]
+				room_to_instance.tile_splash = splash
 				room_to_instance.door_dir = look_for_doors(Vector2(i,j))
 				room_to_instance.walls = look_for_walls(Vector2(i,j))
 				# "Peaceful", "Trapped", "Dangerous", "Dangerous-Trapped"]
 				if room_to_instance.roomtype == "Peaceful":
 					pass # no enemies 
 				if room_to_instance.roomtype == "Trapped":
-					spawn_enemies(Vector2(i,j), 1)
+					pass
+					#spawn_enemies(Vector2(i,j), 1)
 					pass # spawn 1 trapper (?)
 				if room_to_instance.roomtype == "Dangerous":
-					spawn_enemies(Vector2(i,j), 3)
+					pass
+					#spawn_enemies(Vector2(i,j), 3)
 					pass # spawn 3
 				if room_to_instance.roomtype == "Dangerous-Trapped":
-					spawn_enemies(Vector2(i,j), 4)
+					pass
+					#spawn_enemies(Vector2(i,j), 4)
 					pass # spawn 4 - 1 trappers 3 enemies
 				
 				
