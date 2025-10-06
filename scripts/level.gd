@@ -46,10 +46,11 @@ func is_tile_position_valid(pos: Vector2) -> bool:
 	
 func is_tile_id_walkable(tileId ) -> bool:
 	print(tileId)
-	var valid_walkable_tiles = [Vector2(4,2), Vector2(3,6), Vector2(11,2)] # ------ replace this with new 
-	for i in range(0, valid_walkable_tiles.size()):
-		if valid_walkable_tiles[i].x == tileId.x and valid_walkable_tiles[i].y == tileId.y:
-			return true
+	var valid_walkable_tiles = $Room.floor_samples # ------ bad coding. using a nonexistent room as reference 
+	for t in range(0, 3): # 3 possible tile sets are offset by 5 each
+		for i in range(0, valid_walkable_tiles.size() ):
+			if valid_walkable_tiles[i].x + (5 *t) == tileId.x and valid_walkable_tiles[i].y + (5 *t) == tileId.y:
+				return true
 	return false
 	
 func _enter_tree() -> void:

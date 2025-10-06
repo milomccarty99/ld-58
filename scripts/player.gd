@@ -12,46 +12,47 @@ func _enter_tree() -> void:
 	position.y = 32 + 16 #+ 320
 
 func _process(_delta: float) -> void:
+	pass
 	#get_node("CollisionShape2D")
 	#print($CollisionShape2D)
-	var has_moved : bool = false;
-	if Input.is_action_just_pressed("up"):
-		position.y -= 32
-		if $"../Environment/BoilerRoom".is_world_position_valid(position):
-			pass
-		else:
-			position.y += 32
-		turnTake = 1
-		has_moved = true
-	if Input.is_action_just_pressed("down"):
-		position.y += 32
-		if $"../Environment/BoilerRoom".is_world_position_valid(position):
-			pass
-		else:
-			position.y -= 32
-		turnTake = 1
-		has_moved = true
-	if Input.is_action_just_pressed("left"):
-		position.x -= 32
-		if $"../Environment/BoilerRoom".is_world_position_valid(position):
-			pass
-		else:
-			position.x += 32
-		turnTake = 1
-		has_moved = true
-	if Input.is_action_just_pressed("right"):
-		position.x += 32
-		if $"../Environment/BoilerRoom".is_world_position_valid(position):
-			pass
-		else:
-			position.x -= 32
-		turnTake = 1
-		has_moved = true
+	#var has_moved : bool = false;
+	#if Input.is_action_just_pressed("up"):
+	#	position.y -= 32
+	#	if $"../Environment/BoilerRoom".is_world_position_valid(position):
+	#		pass
+	#	else:
+	#		position.y += 32
+	#	turnTake = 1
+	#	has_moved = true
+	#if Input.is_action_just_pressed("down"):
+	#	position.y += 32
+	#	if $"../Environment/BoilerRoom".is_world_position_valid(position):
+	#		pass
+	#	else:
+	#		position.y -= 32
+	#	turnTake = 1
+	#	has_moved = true
+	#if Input.is_action_just_pressed("left"):
+	#	position.x -= 32
+	#	if $"../Environment/BoilerRoom".is_world_position_valid(position):
+	#		pass
+	#	else:
+	#		position.x += 32
+	#	turnTake = 1
+	#	has_moved = true
+	#if Input.is_action_just_pressed("right"):
+	#	position.x += 32
+	#	if $"../Environment/BoilerRoom".is_world_position_valid(position):
+	#		pass
+	#	else:
+	#		position.x -= 32
+	#	turnTake = 1
+	#	has_moved = true
 	#print (" x,y {}{}", position.x, position.y)
-	if has_moved :
-		pass # $CheeseWalk.play()
-	
-	pass
+	#if has_moved :
+	#	pass # $CheeseWalk.play()
+	#
+	#pass
 
 
 
@@ -67,14 +68,19 @@ func _unhandled_input(event):
 	var direction = Vector2.ZERO
 	if event.is_action_pressed("right"):
 		direction = Vector2.RIGHT
+		turnTake = 1
 	elif event.is_action_pressed("left"):
 		direction = Vector2.LEFT
+		turnTake = 1
 	elif event.is_action_pressed("up"):
 		direction = Vector2.UP
+		turnTake = 1
 	elif event.is_action_pressed("down"):
 		direction = Vector2.DOWN
+		turnTake = 1
 	if direction != Vector2.ZERO:
 		move_to_tile(direction)
+		turnTake = 1
 
 func move_to_tile(direction: Vector2):
 	var current_tile: Vector2i = tile_map.local_to_map(global_position)
@@ -82,8 +88,8 @@ func move_to_tile(direction: Vector2):
 		current_tile.x + direction.x,
 		current_tile.y + direction.y,
 	)
-	var tile_data: TileData = tile_map.get_cell_tile_data(0,target_tile)
-	if tile_data.get_custom_data("walkable") == false:
+	var tile_data: TileData = tile_map.get_cell_tile_data(target_tile)
+	if tile_data != null and tile_data.get_custom_data("walkable") == false:
 		return
 	global_position = tile_map.map_to_local(target_tile)
 	

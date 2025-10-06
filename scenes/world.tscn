@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://xix7drsg6d8j"]
+[gd_scene load_steps=30 format=3 uid="uid://xix7drsg6d8j"]
 
 [ext_resource type="Script" uid="uid://cpguuti7aq1vi" path="res://scripts/player.gd" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://bvdv5e3gexbet" path="res://scripts/environment.gd" id="1_rwgxs"]
@@ -18,7 +18,7 @@
 [ext_resource type="Script" uid="uid://cweek32yp1pba" path="res://scripts/damagetaken.gd" id="10_o8fc1"]
 [ext_resource type="AudioStream" uid="uid://dw3asfkgw5weq" path="res://music/UndergroundAccess.wav" id="11_q5onr"]
 [ext_resource type="Script" uid="uid://brbukdlla7y4c" path="res://scripts/music.gd" id="12_jhx03"]
-[ext_resource type="Script" path="res://scripts/BullyBehaviors.gd" id="18_pm21f"]
+[ext_resource type="Script" uid="uid://bsb1ckfkcn2bt" path="res://scripts/BullyBehaviors.gd" id="18_pm21f"]
 [ext_resource type="Texture2D" uid="uid://qk5beyjtvb7o" path="res://images/bloop-enemy.png" id="19_2lf6f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qfnet"]
@@ -482,34 +482,67 @@ texture_region_size = Vector2i(32, 32)
 1:5/0 = 0
 1:6/0 = 0
 1:7/0 = 0
-3:5/size_in_atlas = Vector2i(1, 3)
-3:5/0 = 0
-5:5/size_in_atlas = Vector2i(1, 3)
-5:5/0 = 0
-7:5/size_in_atlas = Vector2i(1, 3)
-7:5/0 = 0
 9:5/0 = 0
 9:7/0 = 0
-1:1/size_in_atlas = Vector2i(1, 3)
 1:1/0 = 0
-3:1/size_in_atlas = Vector2i(1, 3)
 3:1/0 = 0
-5:1/size_in_atlas = Vector2i(1, 3)
 5:1/0 = 0
-7:1/size_in_atlas = Vector2i(1, 3)
 7:1/0 = 0
 9:1/0 = 0
 9:3/0 = 0
-1:9/size_in_atlas = Vector2i(1, 3)
-1:9/0 = 0
-3:9/size_in_atlas = Vector2i(1, 3)
-3:9/0 = 0
-5:9/size_in_atlas = Vector2i(1, 3)
-5:9/0 = 0
-7:9/size_in_atlas = Vector2i(1, 3)
-7:9/0 = 0
 9:9/0 = 0
 9:11/0 = 0
+1:2/0 = 0
+3:2/0 = 0
+5:2/0 = 0
+7:2/0 = 0
+7:3/0 = 0
+5:3/0 = 0
+3:3/0 = 0
+1:3/0 = 0
+3:5/0 = 0
+3:6/0 = 0
+3:7/0 = 0
+5:5/0 = 0
+5:6/0 = 0
+5:7/0 = 0
+7:5/0 = 0
+7:6/0 = 0
+7:7/0 = 0
+1:9/0 = 0
+3:9/0 = 0
+5:9/0 = 0
+7:9/0 = 0
+7:10/0 = 0
+7:11/0 = 0
+5:11/0 = 0
+5:10/0 = 0
+3:11/0 = 0
+3:10/0 = 0
+1:11/0 = 0
+1:10/0 = 0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2lf6f"]
+load_path = "res://.godot/imported/wall_tiles_32x32.png-b447aff5ed2740faa57b05800f905275.ctex"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oo54l"]
+texture = SubResource("CompressedTexture2D_2lf6f")
+texture_region_size = Vector2i(32, 32)
+1:2/0 = 0
+1:3/0 = 0
+1:4/0 = 0
+1:5/0 = 0
+1:6/0 = 0
+4:2/0 = 0
+4:3/0 = 0
+4:4/0 = 0
+4:5/0 = 0
+4:6/0 = 0
+7:2/0 = 0
+7:3/0 = 0
+7:4/0 = 0
+7:5/0 = 0
+7:6/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_i7141"]
 tile_size = Vector2i(32, 32)
@@ -518,6 +551,7 @@ sources/0 = SubResource("TileSetAtlasSource_qfnet")
 sources/1 = SubResource("TileSetAtlasSource_7r4gi")
 sources/2 = SubResource("TileSetAtlasSource_w7kh3")
 sources/3 = SubResource("TileSetAtlasSource_7iits")
+sources/5 = SubResource("TileSetAtlasSource_oo54l")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e3hyu"]
 size = Vector2(32, 32)

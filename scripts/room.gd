@@ -8,6 +8,7 @@ var start_point = Vector2(0,0)
 var wall_thickness = 1
 var ss_i = 1
 var floor_sample = Vector2(3, 6)
+var floor_samples = [Vector2(1,1), Vector2(3,1), Vector2(7,1), Vector2(1,2), Vector2(3,2), Vector2(7,2), Vector2(1,3), Vector2(3,3), Vector2(7,3), Vector2(9,3)]
 var wall_sample = Vector2(0, 0)
 var door_dir = 0
 var walls = 0
@@ -36,7 +37,7 @@ func _ready()->void:
 	label.position = marker.position + Vector2(0, 0)
 	for i in range(0, width):
 		for j in range(0, height):
-			tileMap.set_cell(Vector2(start_point.x * width + i,start_point.y * height + j),ss_i, floor_sample)
+			tileMap.set_cell(Vector2(start_point.x * width + i,start_point.y * height + j),ss_i, floor_samples[0])
 			var running_walls = walls
 			if i == width - 1 and running_walls % 8 == running_walls: # right wall
 				tileMap.set_cell(Vector2(start_point.x * width + i, start_point.y * height + j), ss_i, wall_sample)
@@ -55,19 +56,19 @@ func _ready()->void:
 	for i in range(0, width):
 		for j in range(0, height):
 			#if door_dir % 8 != door_dir:
-			tileMap.set_cell(Vector2(start_point.x * width + 5 , start_point.y * height + 0), ss_i, floor_sample)# up
-			tileMap.set_cell(Vector2(start_point.x * width + 4 , start_point.y * height + 0), ss_i, floor_sample)#
+			tileMap.set_cell(Vector2(start_point.x * width + 5 , start_point.y * height + 0), ss_i, floor_samples[0])# up
+			tileMap.set_cell(Vector2(start_point.x * width + 4 , start_point.y * height + 0), ss_i, floor_samples[0])#
 			#door_dir = door_dir % 8
 			#if door_dir % 4 != door_dir:
-			tileMap.set_cell(Vector2(start_point.x * width, start_point.y * height + 5), ss_i, floor_sample)# left 
-			tileMap.set_cell(Vector2(start_point.x * width, start_point.y * height + 4), ss_i, floor_sample)#
+			tileMap.set_cell(Vector2(start_point.x * width, start_point.y * height + 5), ss_i, floor_samples[0])# left 
+			tileMap.set_cell(Vector2(start_point.x * width, start_point.y * height + 4), ss_i, floor_samples[0])#
 			#door_dir = door_dir % 4
 			#if door_dir % 2 != door_dir:
-			tileMap.set_cell(Vector2(start_point.x * width + 5 , start_point.y * height + height -1), ss_i, floor_sample)# down
-			tileMap.set_cell(Vector2(start_point.x * width + 4 , start_point.y * height + height -1), ss_i, floor_sample)#
+			tileMap.set_cell(Vector2(start_point.x * width + 5 , start_point.y * height + height -1), ss_i, floor_samples[0])# down
+			tileMap.set_cell(Vector2(start_point.x * width + 4 , start_point.y * height + height -1), ss_i, floor_samples[0])#
 			#door_dir = door_dir % 2
 			#if door_dir % 1 != door_dir:
-			tileMap.set_cell(Vector2(start_point.x * width + width - 1 , start_point.y * height + 5), ss_i, floor_sample)# right
-			tileMap.set_cell(Vector2(start_point.x * width + width - 1 , start_point.y * height + 4), ss_i, floor_sample)
+			tileMap.set_cell(Vector2(start_point.x * width + width - 1 , start_point.y * height + 5), ss_i, floor_samples[0])# right
+			tileMap.set_cell(Vector2(start_point.x * width + width - 1 , start_point.y * height + 4), ss_i, floor_samples[0])
 		#pass #tileMap.set_cell(Vector2(i,j), 1, Vector2(0,1)) # wall
 			
