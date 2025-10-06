@@ -32,6 +32,26 @@ class Room:
 #	- two rooms in the center with boilers
 # 	- room made of boxes
 
+
+func is_world_position_valid(worldPos : Vector2) ->bool :
+	var translateCoord = (worldPos - Vector2(16,16)) / 32
+	return is_tile_position_valid(translateCoord)
+	
+func is_tile_position_valid(pos: Vector2) -> bool:
+	var tileId = $"../TileMapLayer".get_cell_atlas_coords(pos)
+	if tileId.x == -1 and tileId.y == -1:
+		return false
+	return is_tile_id_walkable(tileId)
+	
+	
+func is_tile_id_walkable(tileId ) -> bool:
+	print(tileId)
+	var valid_walkable_tiles = [Vector2(4,2), Vector2(3,6), Vector2(11,2)] # ------ replace this with new 
+	for i in range(0, valid_walkable_tiles.size()):
+		if valid_walkable_tiles[i].x == tileId.x and valid_walkable_tiles[i].y == tileId.y:
+			return true
+	return false
+	
 func _enter_tree() -> void:
 	
 	pass
@@ -199,7 +219,7 @@ func _ready()->void:
 	for i in range(0, width):
 		for j in range(0, height):
 			if (included[i + width * j]):
-				var tile_indexed = [Vector2(4,2), Vector2(3,6), Vector2(11,2)]
+				var tile_indexed = [Vector2(4,2), Vector2(3,6), Vector2(11,2)] # ------ replace these with newer tiles
 				var splash = m[i + width * j] % tile_indexed.size()
 				#tileMap.set_cell(Vector2(i,j),1, tile_indexed[splash])
 				var room_to_instance = room_scene_preload.instantiate()

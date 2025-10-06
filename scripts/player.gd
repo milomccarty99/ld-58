@@ -6,8 +6,8 @@ var turnTake
 var equippedWeapon = "fist"
 
 func _enter_tree() -> void:
-	position.x = 0 #+ 320aaa
-	position.y = 0 #+ 320
+	position.x = 32 + 16 #+ 320aaa
+	position.y = 32 + 16 #+ 320
 
 func _process(_delta: float) -> void:
 	#get_node("CollisionShape2D")
@@ -15,18 +15,34 @@ func _process(_delta: float) -> void:
 	var has_moved : bool = false;
 	if Input.is_action_just_pressed("up"):
 		position.y -= 32
+		if $"../Environment/BoilerRoom".is_world_position_valid(position):
+			pass
+		else:
+			position.y += 32
 		turnTake = 1
 		has_moved = true
 	if Input.is_action_just_pressed("down"):
 		position.y += 32
+		if $"../Environment/BoilerRoom".is_world_position_valid(position):
+			pass
+		else:
+			position.y -= 32
 		turnTake = 1
 		has_moved = true
 	if Input.is_action_just_pressed("left"):
 		position.x -= 32
+		if $"../Environment/BoilerRoom".is_world_position_valid(position):
+			pass
+		else:
+			position.x += 32
 		turnTake = 1
 		has_moved = true
 	if Input.is_action_just_pressed("right"):
 		position.x += 32
+		if $"../Environment/BoilerRoom".is_world_position_valid(position):
+			pass
+		else:
+			position.x -= 32
 		turnTake = 1
 		has_moved = true
 	#print (" x,y {}{}", position.x, position.y)

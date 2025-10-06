@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://xix7drsg6d8j"]
+[gd_scene load_steps=25 format=3 uid="uid://xix7drsg6d8j"]
 
 [ext_resource type="Script" uid="uid://cpguuti7aq1vi" path="res://scripts/player.gd" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://bvdv5e3gexbet" path="res://scripts/environment.gd" id="1_rwgxs"]
@@ -9,13 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://d3rortgtgeujk" path="res://images/assortment.png" id="8_7r4gi"]
 [ext_resource type="Script" uid="uid://ddwq2uiwp6kpm" path="res://scripts/health.gd" id="8_e3hyu"]
 [ext_resource type="Texture2D" uid="uid://cub3860npe3eq" path="res://images/ProtagIdle.png" id="8_w7kh3"]
-[ext_resource type="Script" uid="uid://cqyxxlv46qiu6" path="res://scripts/healing.gd" id="9_e3hyu"]
+[ext_resource type="Script" path="res://scripts/healing.gd" id="9_e3hyu"]
 [ext_resource type="Texture2D" uid="uid://mnsxed30kkuq" path="res://images/CookieHealth.png" id="9_jhx03"]
 [ext_resource type="Texture2D" uid="uid://cxawsbs4iea12" path="res://images/Source_indoor_tiles_all.png" id="9_w7kh3"]
 [ext_resource type="Texture2D" uid="uid://bv7qpscfhak0b" path="res://images/CookieHealthCrumbles1.png" id="9_xo05s"]
 [ext_resource type="Texture2D" uid="uid://c2jyrqximc7fd" path="res://images/CookieHealthCrumbles2.png" id="10_dss4m"]
-[ext_resource type="Script" uid="uid://cweek32yp1pba" path="res://scripts/damagetaken.gd" id="10_o8fc1"]
-[ext_resource type="Script" uid="uid://dxc06wq1qhdn1" path="res://scenes/collision_shape_2d.gd" id="10_w7kh3"]
+[ext_resource type="Script" path="res://scripts/damagetaken.gd" id="10_o8fc1"]
 [ext_resource type="Script" path="res://scenes/collision_shape_2d.gd" id="10_w7kh3"]
 [ext_resource type="AudioStream" uid="uid://dw3asfkgw5weq" path="res://music/UndergroundAccess.wav" id="11_q5onr"]
 [ext_resource type="Script" uid="uid://brbukdlla7y4c" path="res://scripts/music.gd" id="12_jhx03"]
@@ -541,10 +540,6 @@ drag_horizontal_offset = -0.1
 drag_vertical_offset = -0.1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Player"]
-offset_left = -794.0
-offset_top = -125.0
-offset_right = -332.0
-offset_bottom = 131.0
 visible = false
 offset_left = -562.0
 offset_top = -313.0
@@ -618,6 +613,7 @@ texture = ExtResource("9_jhx03")
 [node name="CookieHealth3" type="Sprite2D" parent="UI/Control/FullHeart3"]
 position = Vector2(77.5, 19.5)
 texture = ExtResource("9_jhx03")
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_q5onr")
 autoplay = true
