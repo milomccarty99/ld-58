@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://xix7drsg6d8j"]
+[gd_scene load_steps=31 format=3 uid="uid://xix7drsg6d8j"]
 
 [ext_resource type="Script" uid="uid://cpguuti7aq1vi" path="res://scripts/player.gd" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://bvdv5e3gexbet" path="res://scripts/environment.gd" id="1_rwgxs"]
@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://d3rortgtgeujk" path="res://images/assortment.png" id="8_7r4gi"]
 [ext_resource type="Script" uid="uid://ddwq2uiwp6kpm" path="res://scripts/health.gd" id="8_e3hyu"]
 [ext_resource type="Texture2D" uid="uid://cub3860npe3eq" path="res://images/ProtagIdle.png" id="8_w7kh3"]
-[ext_resource type="Script" path="res://scripts/healing.gd" id="9_e3hyu"]
+[ext_resource type="Script" uid="uid://cqyxxlv46qiu6" path="res://scripts/healing.gd" id="9_e3hyu"]
 [ext_resource type="Texture2D" uid="uid://mnsxed30kkuq" path="res://images/CookieHealth.png" id="9_jhx03"]
 [ext_resource type="Texture2D" uid="uid://cxawsbs4iea12" path="res://images/Source_indoor_tiles_all.png" id="9_w7kh3"]
 [ext_resource type="Texture2D" uid="uid://bv7qpscfhak0b" path="res://images/CookieHealthCrumbles1.png" id="9_xo05s"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://cweek32yp1pba" path="res://scripts/damagetaken.gd" id="10_o8fc1"]
 [ext_resource type="AudioStream" uid="uid://dw3asfkgw5weq" path="res://music/UndergroundAccess.wav" id="11_q5onr"]
 [ext_resource type="Script" uid="uid://brbukdlla7y4c" path="res://scripts/music.gd" id="12_jhx03"]
+[ext_resource type="Script" path="res://scenes/scene.gd" id="14_7iits"]
 [ext_resource type="Script" uid="uid://bsb1ckfkcn2bt" path="res://scripts/BullyBehaviors.gd" id="18_pm21f"]
 [ext_resource type="Texture2D" uid="uid://qk5beyjtvb7o" path="res://images/bloop-enemy.png" id="19_2lf6f"]
 
@@ -494,17 +495,22 @@ texture_region_size = Vector2i(32, 32)
 9:11/0 = 0
 1:2/0 = 0
 3:2/0 = 0
+3:2/0/custom_data_0 = true
 5:2/0 = 0
+5:2/0/custom_data_0 = true
 7:2/0 = 0
+7:2/0/custom_data_0 = true
 7:3/0 = 0
 5:3/0 = 0
 3:3/0 = 0
 1:3/0 = 0
 3:5/0 = 0
 3:6/0 = 0
+3:6/0/custom_data_0 = true
 3:7/0 = 0
 5:5/0 = 0
 5:6/0 = 0
+5:6/0/custom_data_0 = true
 5:7/0 = 0
 7:5/0 = 0
 7:6/0 = 0
@@ -517,8 +523,10 @@ texture_region_size = Vector2i(32, 32)
 7:11/0 = 0
 5:11/0 = 0
 5:10/0 = 0
+5:10/0/custom_data_0 = true
 3:11/0 = 0
 3:10/0 = 0
+3:10/0/custom_data_0 = true
 1:11/0 = 0
 1:10/0 = 0
 
@@ -547,6 +555,8 @@ texture_region_size = Vector2i(32, 32)
 [sub_resource type="TileSet" id="TileSet_i7141"]
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "walkable"
+custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_qfnet")
 sources/1 = SubResource("TileSetAtlasSource_7r4gi")
 sources/2 = SubResource("TileSetAtlasSource_w7kh3")
@@ -642,6 +652,7 @@ visibility_layer = 512
 shape = SubResource("RectangleShape2D_e3hyu")
 
 [node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("14_7iits")
 
 [node name="Control" type="Control" parent="UI"]
 layout_mode = 3
@@ -686,6 +697,10 @@ texture = ExtResource("9_jhx03")
 position = Vector2(77.5, 19.5)
 texture = ExtResource("9_jhx03")
 
+[node name="Button" type="Button" parent="UI"]
+offset_right = 8.0
+offset_bottom = 8.0
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_q5onr")
 volume_db = -17.14
@@ -700,15 +715,17 @@ script = ExtResource("18_pm21f")
 position = Vector2(4, 0)
 
 [node name="BloopEnemy" type="Sprite2D" parent="EnemyBully/BullyBody"]
-position = Vector2(-164, -16)
+position = Vector2(284, 279)
 texture = ExtResource("19_2lf6f")
 
 [node name="EnemyHitbox" type="CollisionShape2D" parent="EnemyBully/BullyBody"]
-position = Vector2(-164, -16)
+position = Vector2(284, 279)
 shape = SubResource("RectangleShape2D_e3hyu")
 
 [node name="EnemyDetectionBox" type="CollisionShape2D" parent="EnemyBully/BullyBody"]
 light_mask = 512
 visibility_layer = 512
-position = Vector2(-164, -16)
+position = Vector2(284, 279)
 shape = SubResource("RectangleShape2D_pm21f")
+
+[node name="SceneSwitcher" type="Node" parent="."]

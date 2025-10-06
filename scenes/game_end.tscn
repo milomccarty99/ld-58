@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://bm4b65dnx08w0"]
+
+[ext_resource type="Script" uid="uid://dfjuea31dwgxy" path="res://scripts/inventory.gd" id="1_c6nph"]
+[ext_resource type="Texture2D" uid="uid://cc0jml6eh3kcw" path="res://images/sandwich_final_scene_medium.png" id="2_344vo"]
+[ext_resource type="Texture2D" uid="uid://b3rhmre5urgpk" path="res://images/End_screen_V4_p2-1280x640.png" id="3_kcjj8"]
+[ext_resource type="Texture2D" uid="uid://cacexkkx5k0rf" path="res://images/sandwich_final_scene_small.png" id="4_nmcfy"]
+[ext_resource type="Texture2D" uid="uid://dpar60hm51lue" path="res://images/sandwich_final_scene_big1.png" id="5_3a5v0"]
+[ext_resource type="Texture2D" uid="uid://bf3o5liyoowk3" path="res://images/sandwich_final_scene_big2.png" id="6_2hgqa"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qrkt5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_3a5v0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_2hgqa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="GameEnd" type="Node2D"]
+
+[node name="InventoryTrack" type="Node2D" parent="."]
+script = ExtResource("1_c6nph")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SandwichFinalSceneMedium" type="Sprite2D" parent="CanvasLayer/Control"]
+position = Vector2(640, 320)
+texture = ExtResource("2_344vo")
+
+[node name="BadEndGameOver" type="Sprite2D" parent="CanvasLayer/Control"]
+position = Vector2(640, 320)
+texture = ExtResource("3_kcjj8")
+
+[node name="SandwichFinalSceneSmall" type="Sprite2D" parent="CanvasLayer/Control"]
+position = Vector2(640, 320)
+texture = ExtResource("4_nmcfy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control"]
+position = Vector2(640, 320)
+sprite_frames = SubResource("SpriteFrames_qrkt5")
+frame_progress = 0.74351496

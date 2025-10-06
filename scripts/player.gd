@@ -4,63 +4,16 @@ var energy = 10
 var speed = 100
 var turnTake
 var equippedWeapon = "fist"
-
-
-
-func _enter_tree() -> void:
-	position.x = 32 + 16 #+ 320aaa
-	position.y = 32 + 16 #+ 320
-
-func _process(_delta: float) -> void:
-	pass
-	#get_node("CollisionShape2D")
-	#print($CollisionShape2D)
-	#var has_moved : bool = false;
-	#if Input.is_action_just_pressed("up"):
-	#	position.y -= 32
-	#	if $"../Environment/BoilerRoom".is_world_position_valid(position):
-	#		pass
-	#	else:
-	#		position.y += 32
-	#	turnTake = 1
-	#	has_moved = true
-	#if Input.is_action_just_pressed("down"):
-	#	position.y += 32
-	#	if $"../Environment/BoilerRoom".is_world_position_valid(position):
-	#		pass
-	#	else:
-	#		position.y -= 32
-	#	turnTake = 1
-	#	has_moved = true
-	#if Input.is_action_just_pressed("left"):
-	#	position.x -= 32
-	#	if $"../Environment/BoilerRoom".is_world_position_valid(position):
-	#		pass
-	#	else:
-	#		position.x += 32
-	#	turnTake = 1
-	#	has_moved = true
-	#if Input.is_action_just_pressed("right"):
-	#	position.x += 32
-	#	if $"../Environment/BoilerRoom".is_world_position_valid(position):
-	#		pass
-	#	else:
-	#		position.x -= 32
-	#	turnTake = 1
-	#	has_moved = true
-	#print (" x,y {}{}", position.x, position.y)
-	#if has_moved :
-	#	pass # $CheeseWalk.play()
-	#
-	#pass
-
-
-
 var tile_size = 32
 var is_moving = false
 var target_position: Vector2
 @export var player : CharacterBody2D
 @onready var tile_map = $"../Environment/TileMapLayer"
+
+func _ready()->void:
+	position.x = 32 + 16
+	position.y = 32 + 16
+
 
 func _unhandled_input(event):
 	if is_moving:
@@ -68,37 +21,22 @@ func _unhandled_input(event):
 	var direction = Vector2.ZERO
 	if event.is_action_pressed("right"):
 		direction = Vector2.RIGHT
-		turnTake = 1
 	elif event.is_action_pressed("left"):
 		direction = Vector2.LEFT
-		turnTake = 1
 	elif event.is_action_pressed("up"):
 		direction = Vector2.UP
-		turnTake = 1
 	elif event.is_action_pressed("down"):
 		direction = Vector2.DOWN
-		turnTake = 1
 	if direction != Vector2.ZERO:
 		move_to_tile(direction)
-		turnTake = 1
 
 func move_to_tile(direction: Vector2):
-	var current_tile: Vector2i = tile_map.local_to_map(global_position)
-	var target_tile: Vector2i = Vector2i(
-		current_tile.x + direction.x,
-		current_tile.y + direction.y,
-	)
-	var tile_data: TileData = tile_map.get_cell_tile_data(target_tile)
-	if tile_data != null and tile_data.get_custom_data("walkable") == false:
-		return
-	global_position = tile_map.map_to_local(target_tile)
-	
 	is_moving = true
 	target_position = position + direction * tile_size
 	if $"../Environment/BoilerRoom".is_world_position_valid(target_position):
-			pass
+		pass
 	else:
-		target_position -= direction * tile_size
+		target_position -= tile_size * direction
 	create_movement_tween()
 
 #tweening the movement to make it bouncy
@@ -113,7 +51,6 @@ func create_movement_tween():
 func on_tween_finished():
 	is_moving = false
 
-
 func swapWeapon():
 	#Swapping Weapon, set attack range
 	if Input.is_action_pressed("swap_weapon_L") || Input.is_action_pressed("swap_weapon_R"):
@@ -126,7 +63,7 @@ func swapWeapon():
 			equippedWeapon = "fist"
 pass
 
-func attack(): 	
+func attack():
 	#Attacking
 	if Input.is_action_pressed("attack"):
 		if equippedWeapon == "fist":

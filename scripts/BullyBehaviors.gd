@@ -1,8 +1,8 @@
-extends Node
+extends Node2D
 
 @onready var tile_map = $"../Environment/TileMapLayer"
 @onready var player = $"../Player"
-
+@onready var sprite_2d = $BullyBody/BloopEnemy
 var astar_grid: AStarGrid2D
 var is_moving : bool
 
@@ -30,10 +30,26 @@ func _ready():
 func _process(_delta):
 	if is_moving:
 		return
-#	move()
+	move()
 	
-#func move():
-#	var path = astar_grid.get_id_path(
-#		tile_map.local_to_map(global_position),
-#		tile_map.local_to_map(player.global.position)
-#	)
+func move():
+	#needs from and to vector2i
+	var path = astar_grid.get_id_path(
+		tile_map.local_to_map(global_position),
+		tile_map.local_to_map(player.global.position)
+	)
+	
+	path.pop_front()
+	if path.is_empty():
+		return
+	var original_position = Vector2(global_position)
+	global_position = tile_map.map_to_local(path[0])
+	sprite_2d.global_position = original_position
+	is_moving = true
+
+func _physics_process(_delta):
+	if is_moving:
+		sprite_2d.global_position = sprite_2d.global_position.move_toward(global_position,1)
+		if sprite_2d.global_position != global_position:
+			return
+		is_moving = false
