@@ -6,6 +6,7 @@ var turnTake
 var equippedWeapon = "fist"
 
 
+
 func _enter_tree() -> void:
 	position.x = 32 + 16 #+ 320aaa
 	position.y = 32 + 16 #+ 320
@@ -52,9 +53,13 @@ func _process(_delta: float) -> void:
 	
 	pass
 
+
+
 var tile_size = 32
 var is_moving = false
 var target_position: Vector2
+@export var player : CharacterBody2D
+@onready var tile_map = $"../Environment/TileMapLayer"
 
 func _unhandled_input(event):
 	if is_moving:
@@ -72,6 +77,16 @@ func _unhandled_input(event):
 		move_to_tile(direction)
 
 func move_to_tile(direction: Vector2):
+	var current_tile: Vector2i = tile_map.local_to_map(global_position)
+	var target_tile: Vector2i = Vector2i(
+		current_tile.x + direction.x,
+		current_tile.y + direction.y,
+	)
+	var tile_data: TileData = tile_map.get_cell_tile_data(0,target_tile)
+	if tile_data.get_custom_data("walkable") == false:
+		return
+	global_position = tile_map.map_to_local(target_tile)
+	
 	is_moving = true
 	target_position = position + direction * tile_size
 	if $"../Environment/BoilerRoom".is_world_position_valid(target_position):
