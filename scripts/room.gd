@@ -12,7 +12,7 @@ var floor_samples = [Vector2(1,1), Vector2(3,1), Vector2(7,1), Vector2(1,2), Vec
 var wall_sample = Vector2(0, 0)
 var door_dir = 0
 var walls = 0
-@onready
+@onready 
 var tileMap = $"../../TileMapLayer"
 @onready
 var marker = $Marker
