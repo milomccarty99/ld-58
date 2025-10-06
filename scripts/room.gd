@@ -16,7 +16,7 @@ var wall_splash_offset = Vector2(3, 0)
 var wall_sample = Vector2(1, 5)
 var door_dir = 0
 var walls = 0
-@onready
+@onready 
 var tileMap = $"../../TileMapLayer"
 @onready
 var marker = $Marker

@@ -15,27 +15,23 @@ func _ready()->void:
 	position.y = 32 + 16
 	
 
+
 func _unhandled_input(event):
 	if is_moving:
 		return
 	var direction = Vector2.ZERO
 	if event.is_action_pressed("right"):
 		direction = Vector2.RIGHT
-		turnTake = 1
 	elif event.is_action_pressed("left"):
 		direction = Vector2.LEFT
-		turnTake = 1
 	elif event.is_action_pressed("up"):
 		direction = Vector2.UP
-		turnTake = 1
 	elif event.is_action_pressed("down"):
 		direction = Vector2.DOWN
-		turnTake = 1
 	if direction != Vector2.ZERO:
 		move_to_tile(direction)
 
 func move_to_tile(direction: Vector2):
-	
 	is_moving = true
 	target_position = position + direction * tile_size
 	if $"../Environment/BoilerRoom".is_world_position_valid(target_position):

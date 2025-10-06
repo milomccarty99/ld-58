@@ -32,21 +32,21 @@ func _process(_delta):
 		return
 	move()
 
-func move():
+#func move():
 	#needs from and to vector2i
-	var path = astar_grid.get_id_path(
-		Vector2(global_position.x / 32, global_position.y / 32), #tile_map.local_to_map(position),
-		Vector2(player.global_position.x / 32, player.global_position.y /32) #tile_map.local_to_map(player.position)
-	)
-	#path = astar_grid.get_point_path(Vector2(position.x/32, position.y/32),Vector2(player.position.x / 32, player.position.y/32),false)
-	#path.pop_front()
-	if path.is_empty():
-		return
-	var original_position = Vector2(position)
-	if path.size() > 0:
-		position = tile_map.map_to_local(path[0])
-		sprite_2d.position = position
-		is_moving = true
+#	var path = astar_grid.get_id_path(
+#		Vector2(global_position.x / 32, global_position.y / 32), #tile_map.local_to_map(position),
+#		Vector2(player.global_position.x / 32, player.global_position.y /32) #tile_map.local_to_map(player.position)
+#	)
+#	#path = astar_grid.get_point_path(Vector2(position.x/32, position.y/32),Vector2(player.position.x / 32, player.position.y/32),false)
+#	#path.pop_front()
+#	if path.is_empty():
+#		return
+#	var original_position = Vector2(position)
+#	if path.size() > 0:
+#		position = tile_map.map_to_local(path[0])
+#		sprite_2d.position = position
+#		is_moving = true
 
 func _physics_process(_delta):
 	if is_moving:
@@ -55,3 +55,25 @@ func _physics_process(_delta):
 			return
 		is_moving = false
 		
+	
+func move():
+	#needs from and to vector2i
+	var path = astar_grid.get_id_path(
+		tile_map.local_to_map(global_position),
+		tile_map.local_to_map(player.global.position)
+	)
+	
+	path.pop_front()
+	if path.is_empty():
+		return
+	var original_position = Vector2(global_position)
+	global_position = tile_map.map_to_local(path[0])
+	sprite_2d.global_position = original_position
+	is_moving = true
+
+#func _physics_process(_delta):
+#	if is_moving:
+#		sprite_2d.global_position = sprite_2d.global_position.move_toward(global_position,1)
+#		if sprite_2d.global_position != global_position:
+#			return
+#		is_moving = false
