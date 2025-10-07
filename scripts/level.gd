@@ -8,7 +8,7 @@ var room_walls
 @onready
 var tileMap = $"../TileMapLayer"
 var room_scene_preload = preload("res://scenes/room.tscn")
-var enemy_preload = preload("res://scenes/nondescript_enemy.tscn")
+var enemy_preload = preload("res://scenes/example_enemy.tscn")
 @onready
 var enter_room = Vector2(0,0)
 var exit_room = Vector2(width -1, height - 1)

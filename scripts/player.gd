@@ -3,6 +3,7 @@ extends Node2D
 var energy = 10
 var speed = 100
 var turnTake = 0
+var score = 0
 var equippedWeapon = "fist"
 var tile_size = 32
 var is_moving = false
@@ -13,6 +14,7 @@ var target_position: Vector2
 func _ready()->void:
 	position.x = 32 + 16
 	position.y = 32 + 16
+	$"Health".set_health(4)
 	
 
 
@@ -22,12 +24,19 @@ func _unhandled_input(event):
 	var direction = Vector2.ZERO
 	if event.is_action_pressed("right"):
 		direction = Vector2.RIGHT
+		turnTake += 3
 	elif event.is_action_pressed("left"):
 		direction = Vector2.LEFT
+		turnTake += 3
 	elif event.is_action_pressed("up"):
 		direction = Vector2.UP
+		turnTake += 3
 	elif event.is_action_pressed("down"):
 		direction = Vector2.DOWN
+		turnTake += 3
+	elif event.is_action_pressed("attack"):
+		attack()
+		turnTake += 2
 	if direction != Vector2.ZERO:
 		move_to_tile(direction)
 
@@ -65,16 +74,30 @@ func swapWeapon():
 pass
 
 func attack():
+	var nearest_enemy = null
+	var nearest_enemy_distance = INF
+	for enemy in $"../EnemyContainer".get_children():
+		if enemy == $"../EnemyContainer/AudioStreamPlayer2D":
+			pass
+		elif enemy != null:
+			var dist = abs(enemy.position.x - position.x) + \
+			abs(enemy.position.y - position.y)
+			if dist < nearest_enemy_distance:
+				nearest_enemy = enemy
+				nearest_enemy_distance = dist
+	if nearest_enemy != null:
+		$PlayerAtk.play()
+		nearest_enemy.take_damage(.75)
 	#Attacking
-	if Input.is_action_pressed("attack"):
-		if equippedWeapon == "fist":
+	#if Input.is_action_pressed("attack"):
+	#	if equippedWeapon == "fist":
 			#check for valid target
 			#play animation if valid target is present
 			#perform attack if valid target is present
-			turnTake = 1
-		if equippedWeapon == "stick":
+	#		turnTake = 1
+	#	if equippedWeapon == "stick":
 			#check for valid target
 			#play animation if valid target is present
 			#perform attack if valid target is present
-			turnTake = 1
+	#		turnTake = 1
 pass

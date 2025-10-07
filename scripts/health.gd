@@ -43,7 +43,10 @@ func show_healthbar():
 		$"../../UI/Control/FullHeart1".visible=true
 		$"../../UI/Control/FullHeart2".visible=false
 		$"../../UI/Control/FullHeart3".visible=false
-	
+	if health <= 0:
+		$"../../UI/Control/FullHeart1".visible=false
+		$"../../UI/Control/FullHeart2".visible=false
+		$"../../UI/Control/FullHeart3".visible=false
 
 func _heal() -> void:
 	health.health += healing_per_unit

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://xix7drsg6d8j"]
+[gd_scene load_steps=34 format=3 uid="uid://xix7drsg6d8j"]
 
 [ext_resource type="Script" uid="uid://cpguuti7aq1vi" path="res://scripts/player.gd" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://bvdv5e3gexbet" path="res://scripts/environment.gd" id="1_rwgxs"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://d3rortgtgeujk" path="res://images/assortment.png" id="8_7r4gi"]
 [ext_resource type="Script" uid="uid://ddwq2uiwp6kpm" path="res://scripts/health.gd" id="8_e3hyu"]
 [ext_resource type="Texture2D" uid="uid://cub3860npe3eq" path="res://images/ProtagIdle.png" id="8_w7kh3"]
-[ext_resource type="Script" path="res://scripts/healing.gd" id="9_e3hyu"]
+[ext_resource type="Script" uid="uid://cqyxxlv46qiu6" path="res://scripts/healing.gd" id="9_e3hyu"]
 [ext_resource type="Texture2D" uid="uid://mnsxed30kkuq" path="res://images/CookieHealth.png" id="9_jhx03"]
 [ext_resource type="Texture2D" uid="uid://cxawsbs4iea12" path="res://images/Source_indoor_tiles_all.png" id="9_w7kh3"]
 [ext_resource type="Texture2D" uid="uid://bv7qpscfhak0b" path="res://images/CookieHealthCrumbles1.png" id="9_xo05s"]
@@ -17,9 +17,13 @@
 [ext_resource type="Script" uid="uid://cweek32yp1pba" path="res://scripts/damagetaken.gd" id="10_o8fc1"]
 [ext_resource type="AudioStream" uid="uid://dw3asfkgw5weq" path="res://music/UndergroundAccess.wav" id="11_q5onr"]
 [ext_resource type="Script" uid="uid://brbukdlla7y4c" path="res://scripts/music.gd" id="12_jhx03"]
+[ext_resource type="AudioStream" uid="uid://c45i81hdyjw7x" path="res://soundfx/punch 01.wav" id="13_munwf"]
 [ext_resource type="Script" uid="uid://bsb1ckfkcn2bt" path="res://scripts/BullyBehaviors.gd" id="18_pm21f"]
 [ext_resource type="Texture2D" uid="uid://qk5beyjtvb7o" path="res://images/bloop-enemy.png" id="19_2lf6f"]
-[ext_resource type="Script" uid="uid://cwlon0fcqb5ql" path="res://scripts/example_enemy.gd" id="22_oo54l"]
+[ext_resource type="PackedScene" uid="uid://c7a6184igyhkk" path="res://scenes/example_enemy.tscn" id="21_ctatt"]
+[ext_resource type="PackedScene" uid="uid://dfosemsma8hi3" path="res://scenes/collectible.tscn" id="23_ctatt"]
+[ext_resource type="AudioStream" uid="uid://h06ax0rnklbd" path="res://soundfx/scratch 01.wav" id="23_munwf"]
+[ext_resource type="AudioStream" uid="uid://dyl0fv4m67ak1" path="res://soundfx/pickup.wav" id="24_ctatt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qfnet"]
 texture = ExtResource("2_71j4m")
@@ -565,7 +569,6 @@ texture_region_size = Vector2i(32, 32)
 1:10/0/custom_data_0 = true
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2lf6f"]
-load_path = "res://.godot/imported/wall_tiles_32x32.png-b447aff5ed2740faa57b05800f905275.ctex"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oo54l"]
 texture = SubResource("CompressedTexture2D_2lf6f")
@@ -683,6 +686,11 @@ light_mask = 512
 visibility_layer = 512
 shape = SubResource("RectangleShape2D_e3hyu")
 
+[node name="PlayerAtk" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("13_munwf")
+volume_db = 12.55
+pitch_scale = 1.13
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Control" type="Control" parent="UI"]
@@ -729,13 +737,14 @@ position = Vector2(77.5, 19.5)
 texture = ExtResource("9_jhx03")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+visible = false
 stream = ExtResource("11_q5onr")
 volume_db = -17.14
-autoplay = true
-max_distance = 4096.0
+max_distance = 1.0
 script = ExtResource("12_jhx03")
 
 [node name="EnemyBully" type="Node2D" parent="."]
+visible = false
 position = Vector2(80, 80)
 script = ExtResource("18_pm21f")
 
@@ -759,9 +768,21 @@ shape = SubResource("RectangleShape2D_pm21f")
 [node name="EnemyContainer" type="Node2D" parent="."]
 z_index = 1
 
-[node name="ExampleEnemy" type="Node2D" parent="EnemyContainer"]
+[node name="ExampleEnemy" parent="EnemyContainer" instance=ExtResource("21_ctatt")]
 position = Vector2(368, 32)
-script = ExtResource("22_oo54l")
 
-[node name="Sprite2D" type="Sprite2D" parent="EnemyContainer/ExampleEnemy"]
-texture = ExtResource("19_2lf6f")
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="EnemyContainer"]
+stream = ExtResource("23_munwf")
+volume_db = 24.0
+pitch_scale = 0.52
+
+[node name="Collectible" parent="." instance=ExtResource("23_ctatt")]
+position = Vector2(64, 64)
+
+[node name="ItemPickupNoise" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("24_ctatt")
+volume_db = 24.0
+pitch_scale = 0.6
+
+[node name="Collectible2" parent="." instance=ExtResource("23_ctatt")]
+position = Vector2(128, 128)
